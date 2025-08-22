@@ -98,8 +98,10 @@
     <Compile Include="ModEntry.cs"/>
     <Compile Include="ModItems.cs"/>
     <Compile Include="ModResources.cs"/>
+    <Compile Include="Patches\PatchJumpState.cs" />
     <Compile Include="Patches\PatchControllerManager.cs"/>
     <Compile Include="Patches\PatchWalk.cs"/>
+    <Compile Include="Patches\PatchWaterBlockBehaviour.cs" />
     <Compile Include="Preferences.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs"/>
     <Compile Include="Util\CustomPadInstance.cs"/>

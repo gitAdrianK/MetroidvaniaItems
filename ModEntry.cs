@@ -112,15 +112,24 @@ namespace MetroidvaniaItems
                     case DoubleJump:
                         _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
                         break;
+                    case LongJump:
+                        // -> PatchJumpState
+                        break;
                     case LowGravity:
                         _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
                         break;
                     case HighGravity:
                         _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
                         break;
+                    case Sponge:
+                        // -> PatchWaterBlockBehaviour
+                        break;
                     case Umbrella:
                         // I'm Mary Poppins y'all
                         _ = body.RegisterBlockBehaviour<BlockUmbrella>(new BehaviourUmbrella());
+                        break;
+                    case WaterBoots:
+                        // -> PatchWaterBlockBehaviour
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

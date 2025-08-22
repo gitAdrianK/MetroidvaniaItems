@@ -23,7 +23,10 @@
 
         public bool ExecuteBlockBehaviour(BehaviourContext behaviourContext)
         {
-            if (!behaviourContext.BodyComp.IsOnGround)
+            // TODO: Figure out how to prevent left and right inputs from walking,
+            // so it can be used for the menu, but also don't make the player slide around.
+            var bodyComp =  behaviourContext.BodyComp;
+            if (!bodyComp.IsOnGround || bodyComp.Velocity.X != 0.0f)
             {
                 // Close the menu on jump, things get fucky otherwise
                 ModEntry.IsInMenu = false;

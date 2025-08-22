@@ -33,7 +33,7 @@
             var bodyComp = behaviourContext.BodyComp;
             var isLowGravity = ModEntry.DataItems.Active == ItemType.LowGravity;
 
-            var modifier = isLowGravity ? LowGravYMoveMultiplier : 1f;
+            var modifier = isLowGravity ? LowGravYMoveMultiplier : 1.0f;
 
             var newYVelocity = inputYVelocity * modifier;
 
