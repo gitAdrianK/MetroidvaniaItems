@@ -15,19 +15,23 @@
         private static Texture2D IconDefaultNone { get; set; }
         private static Texture2D IconDefaultDoubleJump { get; set; }
         private static Texture2D IconDefaultLowGravity { get; set; }
+        private static Texture2D IconDefaultHighGravity { get; set; }
         private static Texture2D IconDefaultUmbrella { get; set; }
 
         private static Texture2D IconCustomNone { get; set; }
         private static Texture2D IconCustomDoubleJump { get; set; }
         private static Texture2D IconCustomLowGravity { get; set; }
+        private static Texture2D IconCustomHighGravity { get; set; }
         private static Texture2D IconCustomUmbrella { get; set; }
 
         private static Texture2D DefaultDoubleJump { get; set; }
         private static Texture2D DefaultLowGravity { get; set; }
+        private static Texture2D DefaultHighGravity { get; set; }
         private static Texture2D DefaultUmbrella { get; set; }
 
         private static Texture2D CustomDoubleJump { get; set; }
         private static Texture2D CustomLowGravity { get; set; }
+        private static Texture2D CustomHighGravity { get; set; }
         private static Texture2D CustomUmbrella { get; set; }
 
         public static void LoadDefaultTextures()
@@ -42,10 +46,12 @@
             IconDefaultNone = contentManager.Load<Texture2D>(Path.Combine(texturePath, "iconNone"));
             IconDefaultDoubleJump = contentManager.Load<Texture2D>(Path.Combine(texturePath, "iconDoubleJump"));
             IconDefaultLowGravity = contentManager.Load<Texture2D>(Path.Combine(texturePath, "iconLowGravity"));
+            IconDefaultHighGravity = contentManager.Load<Texture2D>(Path.Combine(texturePath, "iconHighGravity"));
             IconDefaultUmbrella = contentManager.Load<Texture2D>(Path.Combine(texturePath, "iconUmbrella"));
 
             DefaultDoubleJump = contentManager.Load<Texture2D>(Path.Combine(texturePath, "doubleJump"));
             DefaultLowGravity = contentManager.Load<Texture2D>(Path.Combine(texturePath, "lowGravity"));
+            DefaultHighGravity = contentManager.Load<Texture2D>(Path.Combine(texturePath, "highGravity"));
             DefaultUmbrella = contentManager.Load<Texture2D>(Path.Combine(texturePath, "umbrella"));
         }
 
@@ -59,10 +65,12 @@
             IconCustomNone = GetOptionalTexture(contentManager, Path.Combine(texturePath, "iconNone"));
             IconCustomDoubleJump = GetOptionalTexture(contentManager, Path.Combine(texturePath, "iconDoubleJump"));
             IconCustomLowGravity = GetOptionalTexture(contentManager, Path.Combine(texturePath, "iconLowGravity"));
+            IconCustomHighGravity = GetOptionalTexture(contentManager, Path.Combine(texturePath, "iconHighGravity"));
             IconCustomUmbrella = GetOptionalTexture(contentManager, Path.Combine(texturePath, "iconUmbrella"));
 
             CustomDoubleJump = GetOptionalTexture(contentManager, Path.Combine(texturePath, "doubleJump"));
             CustomLowGravity = GetOptionalTexture(contentManager, Path.Combine(texturePath, "lowGravity"));
+            CustomHighGravity = GetOptionalTexture(contentManager, Path.Combine(texturePath, "highGravity"));
             CustomUmbrella = GetOptionalTexture(contentManager, Path.Combine(texturePath, "umbrella"));
         }
 
@@ -81,6 +89,8 @@
                     return IconCustomDoubleJump ?? IconDefaultDoubleJump;
                 case ItemType.LowGravity:
                     return IconCustomLowGravity ?? IconDefaultLowGravity;
+                case ItemType.HighGravity:
+                    return IconCustomHighGravity ?? IconDefaultHighGravity;
                 case ItemType.Umbrella:
                     return IconCustomUmbrella ?? IconDefaultUmbrella;
                 default:
@@ -98,6 +108,8 @@
                     return CustomDoubleJump ?? DefaultDoubleJump;
                 case ItemType.LowGravity:
                     return CustomLowGravity ?? DefaultLowGravity;
+                case ItemType.HighGravity:
+                    return CustomHighGravity ?? DefaultHighGravity;
                 case ItemType.Umbrella:
                     return CustomUmbrella ?? DefaultUmbrella;
                 default:

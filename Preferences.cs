@@ -11,11 +11,6 @@
 
     public sealed class Preferences : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         public enum EBinding
         {
             Menu
@@ -26,8 +21,6 @@
             { EBinding.Menu, new[] { (int)Keys.Down } }
         };
 
-        public void ForceUpdate() => this.OnPropertyChanged();
-
         public Dictionary<EBinding, int[]> KeyBindings
         {
             get => this.keyBinds;
@@ -37,6 +30,13 @@
                 this.OnPropertyChanged();
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+            => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public void ForceUpdate() => this.OnPropertyChanged();
 
         public void SaveToFile(string filePath)
         {

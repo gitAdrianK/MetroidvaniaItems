@@ -2,6 +2,7 @@ namespace MetroidvaniaItems
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
     using Behaviours;
@@ -16,7 +17,6 @@ namespace MetroidvaniaItems
     using JumpKing.PauseMenu.BT;
     using JumpKing.Player;
     using Models;
-    using System.Diagnostics.CodeAnalysis;
     using static ModItems.ItemType;
 #if DEBUG
     using System.Diagnostics;
@@ -25,14 +25,6 @@ namespace MetroidvaniaItems
     [JumpKingMod(Identifier)]
     public static class ModEntry
     {
-        // TODO: This has to be tested, menus don't show up unless uploaded to steam
-        [UsedImplicitly]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required for JK")]
-        [PauseMenuItemSetting]
-        [MainMenuItemSetting]
-        public static TextButton BindSettings(object factory, GuiFormat format)
-            => new TextButton("Bind Key(s)", ModelMenuOptions.CreateSaveStatesBindControls(factory));
-
         private const string Identifier = "Zebra.MetroidvaniaItems";
         private const string HarmonyIdentifier = Identifier + ".Harmony";
         private const string SettingsFile = Identifier + ".Settings.xml";
@@ -40,7 +32,16 @@ namespace MetroidvaniaItems
         private static string PreferencesPath { get; set; }
         public static Preferences Preferences { get; private set; }
         public static DataItems DataItems { get; private set; }
+
         public static bool IsInMenu { get; set; }
+
+        // TODO: This has to be tested, menus don't show up unless uploaded to steam
+        [UsedImplicitly]
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required for JK")]
+        [PauseMenuItemSetting]
+        [MainMenuItemSetting]
+        public static TextButton BindSettings(object factory, GuiFormat format)
+            => new TextButton("Bind Key(s)", ModelMenuOptions.CreateSaveStatesBindControls(factory));
 
         /// <summary>
         ///     Called by Jump King before the level loads
@@ -113,6 +114,9 @@ namespace MetroidvaniaItems
                         break;
                     case LowGravity:
                         _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
+                        break;
+                    case HighGravity:
+                        _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
                         break;
                     case Umbrella:
                         // I'm Mary Poppins y'all

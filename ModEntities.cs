@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Xml.Linq;
@@ -29,23 +30,32 @@
 
             var collection = doc.Root
                 ?.Elements("Item")
-                    .Select(item => new Item
+                .Select(item => new Item
+                {
+                    Screen = int.Parse(item.Element("Screen")?.Value ?? throw new InvalidOperationException()) - 1,
+                    Position = new Vector2
                     {
-                        Screen = int.Parse(item.Element("Screen")?.Value ?? throw new InvalidOperationException()) - 1,
-                        Position = new Vector2
-                        {
-                            X = int.Parse(item.Element("Position")?.Element("X")?.Value ?? throw new InvalidOperationException()),
-                            Y = int.Parse(item.Element("Position")?.Element("Y")?.Value ?? throw new InvalidOperationException())
-                        },
-                        Type = (ItemType)Enum.Parse(typeof(ItemType), item.Element("Type")?.Value ?? throw new InvalidOperationException())
-                    })
-                    .ToList() ?? new List<Item>();
+                        X = float.Parse(item.Element("Position")
+                                            ?.Element("X")
+                                            ?.Value ??
+                                        throw new InvalidOperationException(),
+                            CultureInfo.InvariantCulture),
+                        Y = float.Parse(item.Element("Position")
+                                            ?.Element("Y")
+                                            ?.Value ??
+                                        throw new InvalidOperationException(),
+                            CultureInfo.InvariantCulture)
+                    },
+                    Type = (ItemType)Enum.Parse(typeof(ItemType),
+                        item.Element("Type")?.Value ?? throw new InvalidOperationException())
+                })
+                .ToList() ?? new List<Item>();
 
             _ = new EntityItemMenu(player, ModResources.CustomMenu ?? ModResources.DefaultMenu);
             foreach (var item in collection)
             {
                 loadedItems.Add(item.Type);
-                if (ModEntry.DataItems.Collected.Contains(item.Type))
+                if (ModEntry.DataItems.Collected.Contains(new Vector3(item.Position, item.Screen)))
                 {
                     continue;
                 }

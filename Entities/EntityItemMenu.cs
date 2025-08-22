@@ -27,17 +27,15 @@ namespace MetroidvaniaItems.Entities
                 return;
             }
 
-            // TODO: Make pretty :D
-
             var hitbox = this.Player.m_body.GetHitbox();
             var positionX = this.Player.m_body.Position.X + (hitbox.Width / 2);
-            var positionY = this.Player.m_body.Position.Y + hitbox.Height;
+            var positionY = this.Player.m_body.Position.Y + hitbox.Height - (hitbox.Height * 0.2f) + (Camera.CurrentScreen * 360);
 
             Game1.spriteBatch.Draw(
                 this.Texture,
                 new Vector2(
-                    positionX - (this.Texture.Width / 2),
-                    positionY - this.Texture.Height - 2),
+                    (int)(positionX - (this.Texture.Width / 2) + Padding),
+                    (int)(positionY - (this.Texture.Height / 2) - Padding)),
                 Color.White);
 
             var items = ModEntry.DataItems.GetActiveNeighbors();
@@ -45,26 +43,29 @@ namespace MetroidvaniaItems.Entities
             var textureCurr = ModResources.GetIconByType(items[1]);
             var textureNext = ModResources.GetIconByType(items[2]);
 
+            var iconWidthHalf = textureCurr.Width / 2;
+            var iconHeightHalf = textureCurr.Height / 2;
+
             Game1.spriteBatch.Draw(
                 texturePrev,
                 new Vector2(
-                    positionX - textureCurr.Width - Padding - (texturePrev.Width /2),
-                    positionY -  texturePrev.Height - Padding),
-                Color.White);
+                    (int)(positionX - iconWidthHalf - textureCurr.Width - Padding),
+                    (int)(positionY - iconHeightHalf)),
+                new Color(128, 128,128, 128));
 
             Game1.spriteBatch.Draw(
                 textureCurr,
                 new Vector2(
-                    positionX - (textureCurr.Width /2) + Padding,
-                    positionY -  textureCurr.Height - Padding),
+                    (int)(positionX - iconWidthHalf + Padding),
+                    (int)(positionY - iconHeightHalf)),
                 Color.White);
 
             Game1.spriteBatch.Draw(
                 textureNext,
                 new Vector2(
-                    positionX + textureCurr.Width + Padding - (texturePrev.Width /2),
-                    positionY -  textureNext.Height - Padding),
-                Color.White);
+                    (int)(positionX + iconWidthHalf + textureCurr.Width + Padding),
+                    (int)(positionY - iconHeightHalf)),
+                new Color(128, 128,128, 128));
         }
     }
 }

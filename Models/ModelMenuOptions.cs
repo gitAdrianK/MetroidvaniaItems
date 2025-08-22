@@ -129,14 +129,16 @@
             return btselector;
         }
 
-        private static BindButtonFrame MakeBindButtonMenu(Preferences.EBinding button, GuiFormat format, int orderIndex, Entity entity)
+        private static BindButtonFrame MakeBindButtonMenu(Preferences.EBinding button, GuiFormat format, int orderIndex,
+            Entity entity)
         {
             var btsequencor = new BTsequencor();
             btsequencor.AddChild(new WaitUntilNoInput(entity));
             btsequencor.AddChild(new MenuBindButton(entity, button, orderIndex));
             btsequencor.AddChild(new SetBBKeyNode<bool>(entity, "BBKEY_UNSAVED_CHANGED", true));
             var bindButtonFrame = new BindButtonFrame(format, btsequencor);
-            bindButtonFrame.AddChild(new TextButton(Util.ParseString(language.MENUFACTORY_PRESS_BUTTON, button), btsequencor));
+            bindButtonFrame.AddChild(new TextButton(Util.ParseString(language.MENUFACTORY_PRESS_BUTTON, button),
+                btsequencor));
             bindButtonFrame.Initialize();
 
             var draw = MenuFactoryDrawables;

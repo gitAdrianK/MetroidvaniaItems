@@ -8,14 +8,14 @@
 
     public class MenuBindButton : EntityBTNode
     {
-        private EBinding Button { get; }
-        private int OrderIndex { get; }
-
         public MenuBindButton(Entity entity, EBinding button, int orderIndex) : base(entity)
         {
             this.Button = button;
             this.OrderIndex = orderIndex;
         }
+
+        private EBinding Button { get; }
+        private int OrderIndex { get; }
 
         protected override BTresult MyRun(TickData data)
         {
@@ -69,8 +69,10 @@
                         array2[j] = -1;
                     }
                 }
+
                 array = array2;
             }
+
             for (var k = 0; k < array.Length; k++)
             {
                 for (var l = array.Length - 1; l > k; l--)
@@ -92,9 +94,11 @@
                             array3[m - 1] = array[m];
                         }
                     }
+
                     array = array3;
                 }
             }
+
             return array;
         }
     }

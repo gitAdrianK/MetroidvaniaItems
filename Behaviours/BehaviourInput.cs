@@ -1,6 +1,5 @@
 ﻿namespace MetroidvaniaItems.Behaviours
 {
-    using System.Diagnostics;
     using JumpKing.API;
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Controller;
@@ -47,6 +46,7 @@
             {
                 ModEntry.DataItems.Active = next[0];
             }
+
             if (pressedPadState.right)
             {
                 ModEntry.DataItems.Active = next[2];

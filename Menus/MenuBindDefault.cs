@@ -4,7 +4,7 @@
     using EntityComponent;
     using EntityComponent.BT;
 
-    public class MenuBindDefault: EntityBTNode
+    public class MenuBindDefault : EntityBTNode
     {
         public MenuBindDefault(Entity entity) : base(entity)
         {

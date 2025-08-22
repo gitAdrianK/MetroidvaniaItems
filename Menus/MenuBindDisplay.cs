@@ -14,12 +14,12 @@
 
     public class MenuBindDisplay : EntityBTNode, IMenuItem, UnSelectable
     {
-        private EBinding Button { get; }
-        private static SpriteFont Font => Game1.instance.contentManager.font.MenuFontSmall;
-
         public MenuBindDisplay(Entity entity, EBinding button)
             : base(entity) =>
             this.Button = button;
+
+        private EBinding Button { get; }
+        private static SpriteFont Font => Game1.instance.contentManager.font.MenuFontSmall;
 
         public void Draw(int x, int y, bool selected)
         {
@@ -52,6 +52,8 @@
             MenuItemHelper.Draw(x + (int)(x2 / 3f * 1f), y, buttonName, Color.Gray, Font);
         }
 
+        public Point GetSize() => MenuItemHelper.GetSize("xbox 360 controller 1____         ", Font);
+
         private string FormatString(string formatString)
         {
             var num = this.GetSize().X / 3;
@@ -67,8 +69,6 @@
 
             return formatString.Substring(0, formatString.Length - 1) + "*";
         }
-
-        public Point GetSize() => MenuItemHelper.GetSize("xbox 360 controller 1____         ", Font);
 
         protected override BTresult MyRun(TickData data) => BTresult.Failure;
     }

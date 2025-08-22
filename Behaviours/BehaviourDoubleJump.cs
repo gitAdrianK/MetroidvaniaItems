@@ -9,17 +9,16 @@
 
     public class BehaviourDoubleJump : IBlockBehaviour
     {
-        public bool IsPlayerOnBlock { get; set; }
-        public float BlockPriority => 2.0f;
+        public BehaviourDoubleJump(PlayerEntity player)
+            => this.Player = player ?? throw new ArgumentNullException(nameof(player));
 
         private bool DoubleJumpFlag { get; set; }
-        private float DoubleJumpVelocity  { get; set; }
+        private float DoubleJumpVelocity { get; set; }
 
         private InputComponent Input { get; set; }
         private PlayerEntity Player { get; }
-
-        public BehaviourDoubleJump(PlayerEntity player)
-            => this.Player = player ?? throw new ArgumentNullException(nameof(player));
+        public bool IsPlayerOnBlock { get; set; }
+        public float BlockPriority => 2.0f;
 
         public float ModifyXVelocity(float inputXVelocity, BehaviourContext behaviourContext) => inputXVelocity;
 
@@ -73,6 +72,7 @@
             {
                 bodyComp.Velocity.X = 0f;
             }
+
             bodyComp.Velocity.Y = this.DoubleJumpVelocity;
             this.DoubleJumpFlag = false;
             this.DoubleJumpVelocity = 0f;

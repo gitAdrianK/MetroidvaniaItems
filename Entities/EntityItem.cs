@@ -16,7 +16,7 @@
             this.Type = item.Type;
             this.Screen = item.Screen;
             this.Position = item.Position;
-            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y, texture.Width, texture.Height);
+            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360), texture.Width, texture.Height);
             this.Player = player;
             this.Texture = texture;
         }
@@ -38,22 +38,28 @@
                 return;
             }
 
-            ModEntry.DataItems.Collected.Add(this.Type);
+            var data = ModEntry.DataItems;
+            if (!data.Owned.Contains(this.Type))
+            {
+                data.Owned.Add(this.Type);
+            }
+
+            data.Collected.Add(new Vector3(this.Position, this.Screen));
+
             Game1.instance.contentManager.audio.Plink.PlayOneShot();
             this.Destroy();
         }
 
         public override void Draw()
         {
-            if (Camera.CurrentScreen != this.Screen
-                || ModEntry.DataItems.Collected.Contains(this.Type))
+            if (Camera.CurrentScreen != this.Screen)
             {
                 return;
             }
 
             Game1.spriteBatch.Draw(
                 this.Texture,
-                new Vector2(this.Position.X, (float)(this.Position.Y + (Math.Sin(this.Offset) * 3f))),
+                new Vector2(this.Position.X, (float)(this.Position.Y + (Math.Sin(this.Offset * 2) * 2))),
                 Color.White);
         }
     }
