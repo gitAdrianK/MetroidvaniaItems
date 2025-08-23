@@ -104,35 +104,27 @@ namespace MetroidvaniaItems
             _ = body.RegisterBlockBehaviour<BlockInput>(new BehaviourInput());
             foreach (var type in loadedTypes)
             {
-                switch (type)
+                // ReSharper disable once ConvertIfStatementToSwitchStatement
+                if (type == DoubleJump)
                 {
-                    case None:
-                        // None means none.
-                        break;
-                    case DoubleJump:
-                        _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
-                        break;
-                    case LongJump:
-                        // -> PatchJumpState
-                        break;
-                    case LowGravity:
-                        _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
-                        break;
-                    case HighGravity:
-                        _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
-                        break;
-                    case Sponge:
-                        // -> PatchWaterBlockBehaviour
-                        break;
-                    case Umbrella:
-                        // I'm Mary Poppins y'all
-                        _ = body.RegisterBlockBehaviour<BlockUmbrella>(new BehaviourUmbrella());
-                        break;
-                    case WaterBoots:
-                        // -> PatchWaterBlockBehaviour
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
+                }
+                else if (type == LowGravity)
+                {
+                    _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
+                }
+                else if (type == HighGravity)
+                {
+                    _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
+                }
+                else if (type == Umbrella)
+                {
+                    // I'm Mary Poppins y'all
+                    _ = body.RegisterBlockBehaviour<BlockUmbrella>(new BehaviourUmbrella());
+                }
+                else if (type == WaterWalker)
+                {
+                    _ = body.RegisterBlockBehaviour<BlockWaterWalker>(new BehaviourWaterWalker());
                 }
             }
         }

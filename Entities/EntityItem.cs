@@ -16,7 +16,8 @@
             this.Type = item.Type;
             this.Screen = item.Screen;
             this.Position = item.Position;
-            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360), texture.Width, texture.Height);
+            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360), texture.Width,
+                texture.Height);
             this.Player = player;
             this.Texture = texture;
         }

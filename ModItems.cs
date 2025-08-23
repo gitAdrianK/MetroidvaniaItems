@@ -8,13 +8,13 @@
             // Ideas/TODOs in comments
             None = 0,
             DoubleJump,
-            // FrostWalker, (water is solid and behaves like ice)
+            HighGravity,
             LongJump,
             LowGravity,
-            HighGravity,
             Sponge,
             Umbrella,
-            WaterBoots
+            WaterBoots,
+            WaterWalker
         }
     }
 }

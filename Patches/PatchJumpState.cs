@@ -1,4 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming
+
 namespace MetroidvaniaItems.Patches
 {
     using HarmonyLib;

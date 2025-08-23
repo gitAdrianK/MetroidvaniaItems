@@ -23,12 +23,10 @@
 
         public bool ExecuteBlockBehaviour(BehaviourContext behaviourContext)
         {
-            // TODO: Figure out how to prevent left and right inputs from walking,
-            // so it can be used for the menu, but also don't make the player slide around.
-            var bodyComp =  behaviourContext.BodyComp;
-            if (!bodyComp.IsOnGround || bodyComp.Velocity.X != 0.0f)
+            var pressedPadState = ControllerManager.instance.GetPressedPadState();
+            if (!behaviourContext.BodyComp.IsOnGround || pressedPadState.jump)
             {
-                // Close the menu on jump, things get fucky otherwise
+                // Better to close the menu when in air
                 ModEntry.IsInMenu = false;
                 return true;
             }
@@ -43,14 +41,12 @@
                 return true;
             }
 
-            var pressedPadState = ControllerManager.instance.GetPressedPadState();
             var next = ModEntry.DataItems.GetActiveNeighbors();
             if (pressedPadState.left)
             {
                 ModEntry.DataItems.Active = next[0];
             }
-
-            if (pressedPadState.right)
+            else if (pressedPadState.right)
             {
                 ModEntry.DataItems.Active = next[2];
             }

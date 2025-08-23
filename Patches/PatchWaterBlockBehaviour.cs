@@ -1,17 +1,18 @@
 ﻿// ReSharper disable InconsistentNaming
+
 namespace MetroidvaniaItems.Patches
 {
-    using System;
-    using System.Diagnostics;
     using HarmonyLib;
     using JetBrains.Annotations;
     using JumpKing.BlockBehaviours;
+    using static ModItems.ItemType;
 
-    [HarmonyPatch(typeof(WaterBlockBehaviour), "get_IsPlayerOnBlock")]
     public static class PatchWaterBlockBehaviour
     {
         [UsedImplicitly]
-        public static void Postfix(WaterBlockBehaviour __instance, ref bool __result)
+        [HarmonyPatch(typeof(WaterBlockBehaviour), "get_IsPlayerOnBlock")]
+        [HarmonyPostfix]
+        public static void get_IsPlayerOnBlock(ref bool __result)
         {
             if (ModEntry.DataItems is null)
             {
@@ -19,11 +20,11 @@ namespace MetroidvaniaItems.Patches
             }
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (ModEntry.DataItems.Active == ModItems.ItemType.Sponge)
+            if (ModEntry.DataItems.Active == Sponge)
             {
                 __result = false;
             }
-            else if (ModEntry.DataItems.Active == ModItems.ItemType.WaterBoots)
+            else if (ModEntry.DataItems.Active == WaterBoots)
             {
                 __result = true;
             }

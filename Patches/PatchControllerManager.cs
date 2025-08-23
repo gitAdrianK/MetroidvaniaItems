@@ -30,16 +30,6 @@ namespace MetroidvaniaItems.Patches
             {
                 OpenCloseItemsMenu = IsPressed(
                     pressedButtons, new[] { (int)Keys.Down })
-                /*OpenCloseItemsMenu = IsPressed(
-                    pressedButtons,
-                    ModEntry.Preferences.KeyBindings[Preferences.BindingActions.OpenCloseItemsMenu]),
-                ItemsMenuLeft = IsPressed(
-                    pressedButtons,
-                    ModEntry.Preferences.KeyBindings[Preferences.BindingActions.ItemsMenuLeft]),
-                ItemsMenuRight = IsPressed(
-                    pressedButtons,
-                    ModEntry.Preferences.KeyBindings[Preferences.BindingActions.ItemsMenuRight])
-                */
             };
         }
 
