@@ -13,7 +13,7 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(WaterBlockBehaviour __instance, ref bool __result)
         {
-            if (ModEntry.DataItems is null || __instance is null)
+            if (ModEntry.DataItems is null)
             {
                 return;
             }
