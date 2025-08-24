@@ -3,25 +3,20 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Xml.Linq;
     using Entities;
-    using JumpKing;
     using JumpKing.Player;
     using Microsoft.Xna.Framework;
     using Util.Deserialization;
 
     public static class ModEntities
     {
-        public static HashSet<ModItems> LoadEntities(PlayerEntity player)
+        public static HashSet<ModItems> LoadEntities(string xmlFile, PlayerEntity player)
         {
             var loadedItems = new HashSet<ModItems>();
 
-            var contentManager = Game1.instance.contentManager;
-            var filePath = Path.Combine(contentManager.root, "metroidvania", "items.xml");
-
-            var doc = XDocument.Load(filePath);
+            var doc = XDocument.Load(xmlFile);
             if (doc.Root == null)
             {
                 return loadedItems;

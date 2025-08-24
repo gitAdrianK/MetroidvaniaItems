@@ -4,7 +4,6 @@
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Controller;
     using JumpKing.Level;
-    using Patches;
 
     public class BehaviourInput : IBlockBehaviour
     {
@@ -31,7 +30,7 @@
                 return true;
             }
 
-            if (PatchControllerManager.CustomPadInstance.GetPressed().OpenCloseItemsMenu)
+            if (pressedPadState.down)
             {
                 ModEntry.IsInMenu = !ModEntry.IsInMenu;
             }

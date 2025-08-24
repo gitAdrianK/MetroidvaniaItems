@@ -6,12 +6,11 @@ namespace MetroidvaniaItems.Patches
     using JetBrains.Annotations;
     using JumpKing.BlockBehaviours;
 
+    [HarmonyPatch(typeof(WaterBlockBehaviour), "get_IsPlayerOnBlock")]
     public static class PatchWaterBlockBehaviour
     {
         [UsedImplicitly]
-        [HarmonyPatch(typeof(WaterBlockBehaviour), "get_IsPlayerOnBlock")]
-        [HarmonyPostfix]
-        public static void get_IsPlayerOnBlock(ref bool __result)
+        public static void Postfix(ref bool __result)
         {
             if (ModEntry.DataItems is null)
             {

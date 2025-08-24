@@ -1,8 +1,5 @@
 namespace MetroidvaniaItems
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
     using Behaviours;
@@ -13,10 +10,7 @@ namespace MetroidvaniaItems
     using JetBrains.Annotations;
     using JumpKing;
     using JumpKing.Mods;
-    using JumpKing.PauseMenu;
-    using JumpKing.PauseMenu.BT;
     using JumpKing.Player;
-    using Models;
 #if DEBUG
     using System.Diagnostics;
 #endif
@@ -26,21 +20,10 @@ namespace MetroidvaniaItems
     {
         private const string Identifier = "Zebra.MetroidvaniaItems";
         private const string HarmonyIdentifier = Identifier + ".Harmony";
-        private const string SettingsFile = Identifier + ".Settings.xml";
 
-        private static string PreferencesPath { get; set; }
-        public static Preferences Preferences { get; private set; }
         public static DataItems DataItems { get; private set; }
 
         public static bool IsInMenu { get; set; }
-
-        // TODO: This has to be tested, menus don't show up unless uploaded to steam
-        [UsedImplicitly]
-        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Required for JK")]
-        [PauseMenuItemSetting]
-        [MainMenuItemSetting]
-        public static TextButton BindSettings(object factory, GuiFormat format)
-            => new TextButton("Bind Key(s)", ModelMenuOptions.CreateSaveStatesBindControls(factory));
 
         /// <summary>
         ///     Called by Jump King before the level loads
@@ -55,13 +38,6 @@ namespace MetroidvaniaItems
 
             var harmony = new Harmony(HarmonyIdentifier);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
-
-            var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ??
-                          throw new InvalidOperationException();
-
-            PreferencesPath = Path.Combine(dllPath, SettingsFile);
-            Preferences = Preferences.LoadFromFile(PreferencesPath);
-            Preferences.PropertyChanged += SaveToFile;
 
             ModResources.LoadDefaultTextures();
         }
@@ -80,8 +56,8 @@ namespace MetroidvaniaItems
                 return;
             }
 
-            var file = Path.Combine(contentManager.root, "metroidvania", "items.xml");
-            if (!File.Exists(file))
+            var xmlFile = Path.Combine(contentManager.root, "metroidvania", "items.xml");
+            if (!File.Exists(xmlFile))
             {
                 return;
             }
@@ -95,7 +71,7 @@ namespace MetroidvaniaItems
 
             DataItems = DataItems.ReadFromFile();
             ModResources.LoadCustomTextures();
-            var loadedTypes = ModEntities.LoadEntities(player);
+            var loadedTypes = ModEntities.LoadEntities(xmlFile, player);
 
             var body = player.m_body;
             // Once again "cheesing" the player behaviour modifiers detected message by registering
@@ -134,8 +110,5 @@ namespace MetroidvaniaItems
         [UsedImplicitly]
         [OnLevelEnd]
         public static void OnLevelEnd() => DataItems.SaveToFile();
-
-        private static void SaveToFile(object sender, PropertyChangedEventArgs args)
-            => Preferences.SaveToFile(PreferencesPath);
     }
 }

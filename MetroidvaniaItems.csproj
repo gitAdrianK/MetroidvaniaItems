@@ -91,24 +91,16 @@
     <Compile Include="Data\DataItems.cs"/>
     <Compile Include="Entities\EntityItemMenu.cs"/>
     <Compile Include="Entities\EntityItem.cs"/>
-    <Compile Include="Menus\MenuBindDefault.cs"/>
-    <Compile Include="Menus\MenuBindButton.cs"/>
-    <Compile Include="Menus\MenuBindDisplay.cs"/>
-    <Compile Include="Menus\MenuSaveBind.cs"/>
-    <Compile Include="Models\ModelMenuOptions.cs"/>
     <Compile Include="ModEntities.cs"/>
     <Compile Include="ModEntry.cs"/>
     <Compile Include="ModItems.cs"/>
     <Compile Include="ModResources.cs"/>
     <Compile Include="Patches\PatchJumpState.cs"/>
-    <Compile Include="Patches\PatchControllerManager.cs"/>
     <Compile Include="Patches\PatchWalk.cs"/>
     <Compile Include="Patches\PatchWalkAnim.cs"/>
     <Compile Include="Patches\PatchWaterBlock.cs"/>
     <Compile Include="Patches\PatchWaterBlockBehaviour.cs"/>
-    <Compile Include="Preferences.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs"/>
-    <Compile Include="Util\CustomPadInstance.cs"/>
     <Compile Include="Util\Deserialization\Item.cs"/>
   </ItemGroup>
   <ItemGroup>
