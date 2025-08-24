@@ -13,7 +13,12 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(ref bool __result)
         {
-            if (BehaviourSolidWater.IsSolid)
+            if (ModEntry.DataItems is null)
+            {
+                return;
+            }
+
+            if (ModEntry.DataItems.Active == ModItems.SolidWater && BehaviourSolidWater.IsSolid)
             {
                 __result = true;
             }
