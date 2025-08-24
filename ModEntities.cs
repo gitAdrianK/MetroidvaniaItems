@@ -19,7 +19,7 @@
             var loadedItems = new HashSet<ModItems>();
 
             var contentManager = Game1.instance.contentManager;
-            var filePath = Path.Combine(contentManager.root, "props", "metroidvania", "items.xml");
+            var filePath = Path.Combine(contentManager.root, "metroidvania", "items.xml");
 
             var doc = XDocument.Load(filePath);
             if (doc.Root == null)
