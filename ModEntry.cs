@@ -17,7 +17,6 @@ namespace MetroidvaniaItems
     using JumpKing.PauseMenu.BT;
     using JumpKing.Player;
     using Models;
-    using static ModItems.ItemType;
 #if DEBUG
     using System.Diagnostics;
 #endif
@@ -81,7 +80,7 @@ namespace MetroidvaniaItems
                 return;
             }
 
-            var file = Path.Combine(contentManager.root, "props", "metroidvania", "items.xml");
+            var file = Path.Combine(contentManager.root, "metroidvania", "items.xml");
             if (!File.Exists(file))
             {
                 return;
@@ -105,26 +104,26 @@ namespace MetroidvaniaItems
             foreach (var type in loadedTypes)
             {
                 // ReSharper disable once ConvertIfStatementToSwitchStatement
-                if (type == DoubleJump)
+                if (type == ModItems.DoubleJump)
                 {
                     _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
                 }
-                else if (type == LowGravity)
+                else if (type == ModItems.LowGravity)
                 {
                     _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
                 }
-                else if (type == HighGravity)
+                else if (type == ModItems.HighGravity)
                 {
                     _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
                 }
-                else if (type == Umbrella)
+                else if (type == ModItems.SlowFall)
                 {
                     // I'm Mary Poppins y'all
-                    _ = body.RegisterBlockBehaviour<BlockUmbrella>(new BehaviourUmbrella());
+                    _ = body.RegisterBlockBehaviour<BlockSlowFall>(new BehaviourSlowFall());
                 }
-                else if (type == WaterWalker)
+                else if (type == ModItems.SolidWater)
                 {
-                    _ = body.RegisterBlockBehaviour<BlockWaterWalker>(new BehaviourWaterWalker());
+                    _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
                 }
             }
         }

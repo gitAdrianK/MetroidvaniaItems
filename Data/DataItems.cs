@@ -9,12 +9,11 @@
     using JumpKing;
     using JumpKing.SaveThread;
     using Microsoft.Xna.Framework;
-    using static ModItems;
 
     public class DataItems
     {
-        public ItemType Active { get; set; } = ItemType.None;
-        public List<ItemType> Owned { get; private set; } = new List<ItemType> { ItemType.None };
+        public ModItems Active { get; set; } = ModItems.None;
+        public List<ModItems> Owned { get; private set; } = new List<ModItems> { ModItems.None };
         public List<Vector3> Collected { get; private set; } = new List<Vector3>();
 
         public static DataItems ReadFromFile()
@@ -40,10 +39,10 @@
 
                 return new DataItems
                 {
-                    Active = (ItemType)Enum.Parse(typeof(ItemType), root.Element("Active")?.Value ?? "None"),
+                    Active = (ModItems)Enum.Parse(typeof(ModItems), root.Element("Active")?.Value ?? "None"),
                     Owned = root.Element("Owned")
                                 ?.Elements("Item")
-                                .Select(item => (ItemType)Enum.Parse(typeof(ItemType),
+                                .Select(item => (ModItems)Enum.Parse(typeof(ModItems),
                                     item.Value))
                                 .ToList() ??
                             throw new InvalidOperationException(),
@@ -103,7 +102,7 @@
             }
         }
 
-        public ItemType[] GetActiveNeighbors()
+        public ModItems[] GetActiveNeighbors()
         {
             var active = this.Owned.FindIndex(entry => entry.Equals(this.Active));
             return new[]

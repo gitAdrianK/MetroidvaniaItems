@@ -5,7 +5,6 @@ namespace MetroidvaniaItems.Patches
     using HarmonyLib;
     using JetBrains.Annotations;
     using JumpKing.BlockBehaviours;
-    using static ModItems.ItemType;
 
     public static class PatchWaterBlockBehaviour
     {
@@ -20,11 +19,11 @@ namespace MetroidvaniaItems.Patches
             }
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (ModEntry.DataItems.Active == Sponge)
+            if (ModEntry.DataItems.Active == ModItems.NeverWater)
             {
                 __result = false;
             }
-            else if (ModEntry.DataItems.Active == WaterBoots)
+            else if (ModEntry.DataItems.Active == ModItems.AlwaysWater)
             {
                 __result = true;
             }

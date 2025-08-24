@@ -6,7 +6,6 @@ namespace MetroidvaniaItems.Patches
     using HarmonyLib;
     using JetBrains.Annotations;
     using JumpKing.Level;
-    using static ModItems.ItemType;
 
     [HarmonyPatch(typeof(WaterBlock), "get_canBlockPlayer")]
     public static class PatchWaterBlock
@@ -14,12 +13,7 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(ref bool __result)
         {
-            if (ModEntry.DataItems is null)
-            {
-                return;
-            }
-
-            if (ModEntry.DataItems.Active == WaterWalker && BehaviourWaterWalker.IsSolid)
+            if (BehaviourSolidWater.IsSolid)
             {
                 __result = true;
             }

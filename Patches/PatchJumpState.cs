@@ -17,7 +17,7 @@ namespace MetroidvaniaItems.Patches
                 return;
             }
 
-            if (ModEntry.DataItems.Active != ModItems.ItemType.LongJump)
+            if (ModEntry.DataItems.Active != ModItems.LongJump)
             {
                 return;
             }

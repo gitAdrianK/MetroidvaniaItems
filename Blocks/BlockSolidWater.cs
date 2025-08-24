@@ -5,9 +5,9 @@
     using Microsoft.Xna.Framework;
 
     [UsedImplicitly]
-    public class BlockUmbrella : BoxBlock
+    public class BlockSolidWater : BoxBlock
     {
-        public BlockUmbrella(Rectangle pCollider) : base(pCollider)
+        public BlockSolidWater(Rectangle pCollider) : base(pCollider)
         {
         }
     }

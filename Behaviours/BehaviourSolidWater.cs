@@ -4,7 +4,7 @@
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Level;
 
-    public class BehaviourWaterWalker : IBlockBehaviour
+    public class BehaviourSolidWater : IBlockBehaviour
     {
         public static bool IsSolid { get; private set; }
         public float ModifyXVelocity(float inputXVelocity, BehaviourContext behaviourContext) => inputXVelocity;
@@ -25,17 +25,22 @@
                 return true;
             }
 
-            IsSolid = true;
+            IsSolid = false;
+            if (ModEntry.DataItems.Active != ModItems.SolidWater)
+            {
+                return true;
+            }
+
             var playerRect = behaviourContext.BodyComp.GetHitbox();
             foreach (var block in advCollisionInfo.GetCollidedBlocks<WaterBlock>())
             {
                 _ = block.Intersects(playerRect, out var collision);
-                if (collision.Size.X <= 0 && collision.Size.Y <= 0)
+                if (collision.Size.X <= 0 || collision.Size.Y <= 0)
                 {
                     continue;
                 }
 
-                IsSolid = false;
+                IsSolid = true;
                 return true;
             }
 

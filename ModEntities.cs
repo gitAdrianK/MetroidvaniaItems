@@ -11,13 +11,12 @@
     using JumpKing.Player;
     using Microsoft.Xna.Framework;
     using Util.Deserialization;
-    using static ModItems;
 
     public static class ModEntities
     {
-        public static HashSet<ItemType> LoadEntities(PlayerEntity player)
+        public static HashSet<ModItems> LoadEntities(PlayerEntity player)
         {
-            var loadedItems = new HashSet<ItemType>();
+            var loadedItems = new HashSet<ModItems>();
 
             var contentManager = Game1.instance.contentManager;
             var filePath = Path.Combine(contentManager.root, "props", "metroidvania", "items.xml");
@@ -46,7 +45,7 @@
                                         throw new InvalidOperationException(),
                             CultureInfo.InvariantCulture)
                     },
-                    Type = (ItemType)Enum.Parse(typeof(ItemType),
+                    Type = (ModItems)Enum.Parse(typeof(ModItems),
                         item.Element("Type")?.Value ?? throw new InvalidOperationException())
                 })
                 .ToList() ?? new List<Item>();

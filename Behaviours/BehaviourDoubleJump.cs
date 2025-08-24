@@ -38,12 +38,12 @@
                 return true;
             }
 
-            if (ModEntry.DataItems.Active == ModItems.ItemType.DoubleJump && this.Player.m_body.IsOnGround)
+            if (ModEntry.DataItems.Active == ModItems.DoubleJump && this.Player.m_body.IsOnGround)
             {
                 this.DoubleJumpFlag = true;
                 this.DoubleJumpVelocity = 0f;
             }
-            else if (ModEntry.DataItems.Active != ModItems.ItemType.DoubleJump && this.Player.m_body.IsOnGround)
+            else if (ModEntry.DataItems.Active != ModItems.DoubleJump && this.Player.m_body.IsOnGround)
             {
                 this.DoubleJumpFlag = false;
             }

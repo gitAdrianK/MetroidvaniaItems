@@ -5,9 +5,9 @@
     using Microsoft.Xna.Framework;
 
     [UsedImplicitly]
-    public class BlockWaterWalker : BoxBlock
+    public class BlockSlowFall : BoxBlock
     {
-        public BlockWaterWalker(Rectangle pCollider) : base(pCollider)
+        public BlockSlowFall(Rectangle pCollider) : base(pCollider)
         {
         }
     }

@@ -7,7 +7,6 @@
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
     using Util.Deserialization;
-    using static ModItems;
 
     public class EntityItem : Entity
     {
@@ -22,7 +21,7 @@
             this.Texture = texture;
         }
 
-        private ItemType Type { get; }
+        private ModItems Type { get; }
         private int Screen { get; }
         private Vector2 Position { get; }
         private float Offset { get; set; }
