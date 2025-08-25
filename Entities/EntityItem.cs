@@ -10,15 +10,19 @@
 
     public class EntityItem : Entity
     {
-        public EntityItem(Item item, PlayerEntity player, Texture2D texture)
+        public EntityItem(Item item, PlayerEntity player)
         {
             this.Type = item.Type;
             this.Screen = item.Screen;
             this.Position = item.Position;
-            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360), texture.Width,
-                texture.Height);
+
+            this.Texture = ModResources.GetInWorldByType(item.Type);
+
+            this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360),
+                this.Texture.Width,
+                this.Texture.Height);
+
             this.Player = player;
-            this.Texture = texture;
         }
 
         private ModItems Type { get; }

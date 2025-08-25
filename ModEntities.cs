@@ -24,25 +24,38 @@
 
             var collection = doc.Root
                 ?.Elements("Item")
-                .Select(item => new Item
+                .Select(item =>
                 {
-                    Screen = int.Parse(item.Element("Screen")?.Value ?? throw new InvalidOperationException()) - 1,
-                    Position = new Vector2
+                    if (int.TryParse(item.Element("Screen")?.Value, out var resultInt))
                     {
-                        X = float.Parse(item.Element("Position")
-                                            ?.Element("X")
-                                            ?.Value ??
-                                        throw new InvalidOperationException(),
-                            CultureInfo.InvariantCulture),
-                        Y = float.Parse(item.Element("Position")
-                                            ?.Element("Y")
-                                            ?.Value ??
-                                        throw new InvalidOperationException(),
-                            CultureInfo.InvariantCulture)
-                    },
-                    Type = (ModItems)Enum.Parse(typeof(ModItems),
-                        item.Element("Type")?.Value ?? throw new InvalidOperationException())
+                        return null;
+                    }
+
+                    if (float.TryParse(item.Element("Position")?.Element("X")?.Value, NumberStyles.Float,
+                            CultureInfo.InvariantCulture, out var resultX))
+                    {
+                        return null;
+                    }
+
+                    if (float.TryParse(item.Element("Position")?.Element("Y")?.Value, NumberStyles.Float,
+                            CultureInfo.InvariantCulture, out var resultY))
+                    {
+                        return null;
+                    }
+
+                    if (!Enum.TryParse(item.Element("Type")?.Value, out ModItems resultEnum))
+                    {
+                        return null;
+                    }
+
+                    return new Item
+                    {
+                        Screen = resultInt - 1,
+                        Position = new Vector2 { X = resultX, Y = resultY },
+                        Type = resultEnum
+                    };
                 })
+                .Where(item => item != null)
                 .ToList() ?? new List<Item>();
 
             _ = new EntityItemMenu(player, ModResources.CustomMenu ?? ModResources.DefaultMenu);
@@ -54,7 +67,7 @@
                     continue;
                 }
 
-                _ = new EntityItem(item, player, ModResources.GetInWorldByType(item.Type));
+                _ = new EntityItem(item, player);
             }
 
             return loadedItems;
