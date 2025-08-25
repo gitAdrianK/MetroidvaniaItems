@@ -41,9 +41,11 @@
                 {
                     continue;
                 }
+
                 IsSolid = false;
                 return true;
             }
+
             return true;
         }
     }

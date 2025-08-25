@@ -109,6 +109,6 @@ namespace MetroidvaniaItems
         /// </summary>
         [UsedImplicitly]
         [OnLevelEnd]
-        public static void OnLevelEnd() => DataItems.SaveToFile();
+        public static void OnLevelEnd() => DataItems?.SaveToFile();
     }
 }
