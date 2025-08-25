@@ -24,8 +24,7 @@
         public bool ExecuteBlockBehaviour(BehaviourContext behaviourContext)
         {
             var pressedPadState = ControllerManager.instance.GetPressedPadState();
-            if (!behaviourContext.BodyComp.IsOnGround ||
-                !(pressedPadState.down || pressedPadState.left || pressedPadState.right))
+            if (!behaviourContext.BodyComp.IsOnGround || pressedPadState.jump)
             {
                 // Close the menu for pretty much all actions unrelated to the menu
                 ModEntry.IsInMenu = false;

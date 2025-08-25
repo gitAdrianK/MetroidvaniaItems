@@ -26,18 +26,18 @@
                 ?.Elements("Item")
                 .Select(item =>
                 {
-                    if (int.TryParse(item.Element("Screen")?.Value, out var resultInt))
+                    if (!int.TryParse(item.Element("Screen")?.Value, out var resultInt))
                     {
                         return null;
                     }
 
-                    if (float.TryParse(item.Element("Position")?.Element("X")?.Value, NumberStyles.Float,
+                    if (!float.TryParse(item.Element("Position")?.Element("X")?.Value, NumberStyles.Float,
                             CultureInfo.InvariantCulture, out var resultX))
                     {
                         return null;
                     }
 
-                    if (float.TryParse(item.Element("Position")?.Element("Y")?.Value, NumberStyles.Float,
+                    if (!float.TryParse(item.Element("Position")?.Element("Y")?.Value, NumberStyles.Float,
                             CultureInfo.InvariantCulture, out var resultY))
                     {
                         return null;
