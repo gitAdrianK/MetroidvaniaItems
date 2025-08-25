@@ -1,5 +1,6 @@
 ﻿namespace MetroidvaniaItems.Behaviours
 {
+    using JumpKing;
     using JumpKing.API;
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Controller;
@@ -23,15 +24,27 @@
         public bool ExecuteBlockBehaviour(BehaviourContext behaviourContext)
         {
             var pressedPadState = ControllerManager.instance.GetPressedPadState();
-            if (!behaviourContext.BodyComp.IsOnGround || pressedPadState.jump)
+            if (!behaviourContext.BodyComp.IsOnGround ||
+                !(pressedPadState.down || pressedPadState.left || pressedPadState.right))
             {
-                // Better to close the menu when in air
+                // Close the menu for pretty much all actions unrelated to the menu
                 ModEntry.IsInMenu = false;
                 return true;
             }
 
+            var data = ModEntry.DataItems;
             if (pressedPadState.down)
             {
+                if (!ModEntry.IsInMenu)
+                {
+                    data.Hovering = data.Active;
+                }
+                else
+                {
+                    data.Active = data.Hovering;
+                    Game1.instance.contentManager.audio.menu.Select.PlayOneShot();
+                }
+
                 ModEntry.IsInMenu = !ModEntry.IsInMenu;
             }
 
@@ -40,14 +53,14 @@
                 return true;
             }
 
-            var next = ModEntry.DataItems.GetActiveNeighbors();
+            var next = data.GetNeighbors(data.Hovering);
             if (pressedPadState.left)
             {
-                ModEntry.DataItems.Active = next[0];
+                data.Hovering = next[0];
             }
             else if (pressedPadState.right)
             {
-                ModEntry.DataItems.Active = next[2];
+                data.Hovering = next[2];
             }
 
             return true;

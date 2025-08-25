@@ -13,6 +13,7 @@
     public class DataItems
     {
         public ModItems Active { get; set; } = ModItems.None;
+        public ModItems Hovering { get; set; } = ModItems.None;
         public List<ModItems> Owned { get; private set; } = new List<ModItems> { ModItems.None };
         public List<Vector3> Collected { get; private set; } = new List<Vector3>();
 
@@ -102,13 +103,13 @@
             }
         }
 
-        public ModItems[] GetActiveNeighbors()
+        public ModItems[] GetNeighbors(ModItems item)
         {
-            var active = this.Owned.FindIndex(entry => entry.Equals(this.Active));
+            var index = this.Owned.FindIndex(entry => entry.Equals(item));
             return new[]
             {
-                this.Owned[(active - 1 + this.Owned.Count) % this.Owned.Count], this.Owned[active],
-                this.Owned[(active + 1 + this.Owned.Count) % this.Owned.Count]
+                this.Owned[(index - 1 + this.Owned.Count) % this.Owned.Count], this.Owned[index],
+                this.Owned[(index + 1 + this.Owned.Count) % this.Owned.Count]
             };
         }
     }

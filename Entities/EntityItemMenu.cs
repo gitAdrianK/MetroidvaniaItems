@@ -39,7 +39,7 @@ namespace MetroidvaniaItems.Entities
                     (int)(positionY - (this.Texture.Height / 2) - Padding)),
                 Color.White);
 
-            var items = ModEntry.DataItems.GetActiveNeighbors();
+            var items = ModEntry.DataItems.GetNeighbors(ModEntry.DataItems.Hovering);
             var texturePrev = ModResources.GetIconByType(items[0]);
             var textureCurr = ModResources.GetIconByType(items[1]);
             var textureNext = ModResources.GetIconByType(items[2]);

@@ -8,12 +8,10 @@
 
     public static class ModResources
     {
-        // General
         // Menu
         public static Texture2D DefaultMenu { get; private set; }
         public static Texture2D CustomMenu { get; private set; }
 
-        // Items
         // None
         private static Texture2D IconDefaultNone { get; set; }
 

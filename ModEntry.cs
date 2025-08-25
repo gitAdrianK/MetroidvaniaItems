@@ -1,5 +1,6 @@
 namespace MetroidvaniaItems
 {
+    using System;
     using System.IO;
     using System.Reflection;
     using Behaviours;
@@ -79,27 +80,31 @@ namespace MetroidvaniaItems
             _ = body.RegisterBlockBehaviour<BlockInput>(new BehaviourInput());
             foreach (var type in loadedTypes)
             {
-                // ReSharper disable once ConvertIfStatementToSwitchStatement
-                if (type == ModItems.DoubleJump)
+                switch (type)
                 {
-                    _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
-                }
-                else if (type == ModItems.LowGravity)
-                {
-                    _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
-                }
-                else if (type == ModItems.HighGravity)
-                {
-                    _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
-                }
-                else if (type == ModItems.SlowFall)
-                {
-                    // I'm Mary Poppins y'all
-                    _ = body.RegisterBlockBehaviour<BlockSlowFall>(new BehaviourSlowFall());
-                }
-                else if (type == ModItems.SolidWater)
-                {
-                    _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
+                    case ModItems.DoubleJump:
+                        _ = body.RegisterBlockBehaviour<BlockDoubleJump>(new BehaviourDoubleJump(player));
+                        break;
+                    case ModItems.LowGravity:
+                        _ = body.RegisterBlockBehaviour<BlockLowGravity>(new BehaviourLowGravity());
+                        break;
+                    case ModItems.HighGravity:
+                        _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
+                        break;
+                    case ModItems.SlowFall:
+                        // I'm Mary Poppins y'all
+                        _ = body.RegisterBlockBehaviour<BlockSlowFall>(new BehaviourSlowFall());
+                        break;
+                    case ModItems.SolidWater:
+                        _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
+                        break;
+                    case ModItems.None:
+                    case ModItems.LongJump:
+                    case ModItems.NeverWater:
+                    case ModItems.AlwaysWater:
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }
