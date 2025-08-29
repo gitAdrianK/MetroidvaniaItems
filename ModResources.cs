@@ -14,56 +14,48 @@
 
         // None
         private static Texture2D IconDefaultNone { get; set; }
-
         private static Texture2D IconCustomNone { get; set; }
 
         // Double Jump
         private static Texture2D DefaultDoubleJump { get; set; }
         private static Texture2D IconDefaultDoubleJump { get; set; }
         private static Texture2D IconCustomDoubleJump { get; set; }
-
         private static Texture2D CustomDoubleJump { get; set; }
 
         // Long Jump
         private static Texture2D IconDefaultLongJump { get; set; }
         private static Texture2D IconCustomLongJump { get; set; }
         private static Texture2D DefaultLongJump { get; set; }
-
         private static Texture2D CustomLongJump { get; set; }
 
         // Low Gravity
         private static Texture2D IconDefaultLowGravity { get; set; }
         private static Texture2D IconCustomLowGravity { get; set; }
         private static Texture2D DefaultLowGravity { get; set; }
-
         private static Texture2D CustomLowGravity { get; set; }
 
         // High Gravity
         private static Texture2D IconDefaultHighGravity { get; set; }
         private static Texture2D DefaultHighGravity { get; set; }
         private static Texture2D IconCustomHighGravity { get; set; }
-
         private static Texture2D CustomHighGravity { get; set; }
 
         // Slow Fall
         private static Texture2D IconDefaultSlowFall { get; set; }
         private static Texture2D IconCustomSlowFall { get; set; }
         private static Texture2D DefaultSlowFall { get; set; }
-
         private static Texture2D CustomSlowFall { get; set; }
 
         // Never Water
         private static Texture2D IconDefaultNeverWater { get; set; }
         private static Texture2D IconCustomNeverWater { get; set; }
         private static Texture2D DefaultNeverWater { get; set; }
-
         private static Texture2D CustomNeverWater { get; set; }
 
         // Always Water
         private static Texture2D IconDefaultAlwaysWater { get; set; }
         private static Texture2D IconCustomAlwaysWater { get; set; }
         private static Texture2D DefaultAlwaysWater { get; set; }
-
         private static Texture2D CustomAlwaysWater { get; set; }
 
         // Solid Water
@@ -71,6 +63,12 @@
         private static Texture2D IconCustomSolidWater { get; set; }
         private static Texture2D DefaultSolidWater { get; set; }
         private static Texture2D CustomSolidWater { get; set; }
+
+        // Always Ice
+        private static Texture2D IconDefaultNeverIce { get; set; }
+        private static Texture2D IconCustomNeverIce { get; set; }
+        private static Texture2D DefaultNeverIce { get; set; }
+        private static Texture2D CustomNeverIce { get; set; }
 
         public static void LoadDefaultTextures()
         {
@@ -98,6 +96,8 @@
                 contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
             IconDefaultSolidWater = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.SolidWater)));
 
+            IconDefaultNeverIce = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.NeverIce)));
+
             var itemPath = Path.Combine(dllPath, "items");
             DefaultDoubleJump = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
             DefaultLongJump = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.LongJump)));
@@ -110,6 +110,8 @@
             DefaultNeverWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.NeverWater)));
             DefaultAlwaysWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
             DefaultSolidWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.SolidWater)));
+
+            DefaultNeverIce = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.NeverIce)));
         }
 
         public static void LoadCustomTextures()
@@ -141,6 +143,8 @@
             IconCustomSolidWater =
                 GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.SolidWater)));
 
+            IconCustomNeverIce = GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
+
             var itemPath = Path.Combine(modFolderPath, "items");
             CustomDoubleJump = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
             CustomLongJump = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
@@ -155,6 +159,8 @@
             CustomAlwaysWater =
                 GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
             CustomSolidWater = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.SolidWater)));
+
+            CustomNeverIce = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
         }
 
         private static Texture2D GetOptionalTexture(JKContentManager contentManager, string texturePath)
@@ -189,6 +195,9 @@
                 case ModItems.SolidWater:
                     return IconCustomSolidWater ?? IconDefaultSolidWater;
 
+                case ModItems.NeverIce:
+                    return IconCustomNeverIce ?? IconDefaultNeverIce;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -220,6 +229,9 @@
                     return CustomAlwaysWater ?? DefaultAlwaysWater;
                 case ModItems.SolidWater:
                     return CustomSolidWater ?? DefaultSolidWater;
+
+                case ModItems.NeverIce:
+                    return CustomNeverIce ?? DefaultNeverIce;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

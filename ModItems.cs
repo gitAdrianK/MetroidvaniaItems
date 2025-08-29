@@ -14,6 +14,8 @@
 
         NeverWater,
         AlwaysWater,
-        SolidWater
+        SolidWater,
+
+        NeverIce
     }
 }

@@ -51,21 +51,21 @@ namespace MetroidvaniaItems.Entities
                 texturePrev,
                 new Vector2(
                     (int)(positionX - iconWidthHalf - textureCurr.Width - Padding),
-                    (int)(positionY - iconHeightHalf)),
+                    (int)(positionY - iconHeightHalf) - Padding),
                 new Color(128, 128, 128, 128));
 
             Game1.spriteBatch.Draw(
                 textureCurr,
                 new Vector2(
                     (int)(positionX - iconWidthHalf + Padding),
-                    (int)(positionY - iconHeightHalf)),
+                    (int)(positionY - iconHeightHalf) - Padding),
                 Color.White);
 
             Game1.spriteBatch.Draw(
                 textureNext,
                 new Vector2(
                     (int)(positionX + iconWidthHalf + textureCurr.Width + Padding),
-                    (int)(positionY - iconHeightHalf)),
+                    (int)(positionY - iconHeightHalf) - Padding),
                 new Color(128, 128, 128, 128));
         }
     }

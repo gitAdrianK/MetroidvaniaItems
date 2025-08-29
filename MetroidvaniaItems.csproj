@@ -92,6 +92,7 @@
     <Compile Include="ModEntry.cs"/>
     <Compile Include="ModItems.cs"/>
     <Compile Include="ModResources.cs"/>
+    <Compile Include="Patches\PatchIceBlockBehaviour.cs" />
     <Compile Include="Patches\PatchJumpState.cs"/>
     <Compile Include="Patches\PatchWalk.cs"/>
     <Compile Include="Patches\PatchWalkAnim.cs"/>
