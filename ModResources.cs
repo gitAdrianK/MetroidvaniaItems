@@ -164,7 +164,7 @@
         }
 
         private static Texture2D GetOptionalTexture(JKContentManager contentManager, string texturePath)
-            => File.Exists(texturePath)
+            => File.Exists(texturePath + ".xnb")
                 ? contentManager.Load<Texture2D>(texturePath)
                 : null;
 
