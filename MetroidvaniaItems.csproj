@@ -74,12 +74,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviours\BehaviourDoubleJump.cs"/>
+    <Compile Include="Behaviours\BehaviourFrozenWater.cs" />
     <Compile Include="Behaviours\BehaviourHighGravity.cs"/>
     <Compile Include="Behaviours\BehaviourInput.cs"/>
     <Compile Include="Behaviours\BehaviourLowGravity.cs"/>
     <Compile Include="Behaviours\BehaviourSlowFall.cs"/>
     <Compile Include="Behaviours\BehaviourSolidWater.cs"/>
     <Compile Include="Blocks\BlockDoubleJump.cs"/>
+    <Compile Include="Blocks\BlockFrozenWater.cs" />
     <Compile Include="Blocks\BlockHighGravity.cs"/>
     <Compile Include="Blocks\BlockLowGravity.cs"/>
     <Compile Include="Blocks\BlockSlowFall.cs"/>

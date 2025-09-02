@@ -5,7 +5,6 @@
     using JumpKing;
     using JumpKing.Player;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
     using Util.Deserialization;
 
     public class EntityItem : Entity
@@ -16,11 +15,11 @@
             this.Screen = item.Screen;
             this.Position = item.Position;
 
-            this.Texture = ModResources.GetInWorldByType(item.Type);
+            this.Sprite = ModResources.GetInWorldByType(item.Type);
 
             this.Hitbox = new Rectangle((int)this.Position.X, (int)this.Position.Y - (item.Screen * 360),
-                this.Texture.Width,
-                this.Texture.Height);
+                this.Sprite.source.Width,
+                this.Sprite.source.Height);
 
             this.Player = player;
         }
@@ -31,7 +30,7 @@
         private float Offset { get; set; }
         private Rectangle Hitbox { get; }
         private PlayerEntity Player { get; }
-        private Texture2D Texture { get; }
+        private Sprite Sprite { get; }
 
         protected override void Update(float delta)
         {
@@ -61,10 +60,7 @@
                 return;
             }
 
-            Game1.spriteBatch.Draw(
-                this.Texture,
-                new Vector2(this.Position.X, (float)(this.Position.Y + (Math.Sin(this.Offset * 2) * 2))),
-                Color.White);
+            this.Sprite.Draw(new Vector2(this.Position.X, (float)(this.Position.Y + (Math.Sin(this.Offset * 2) * 2))));
         }
     }
 }

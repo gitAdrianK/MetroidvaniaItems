@@ -74,6 +74,8 @@ namespace MetroidvaniaItems
             ModResources.LoadCustomTextures();
             var loadedTypes = ModEntities.LoadEntities(xmlFile, player);
 
+            var isSolidWaterRegistered = false;
+
             var body = player.m_body;
             // Once again "cheesing" the player behaviour modifiers detected message by registering
             // behaviours as block behaviours.
@@ -96,12 +98,25 @@ namespace MetroidvaniaItems
                         _ = body.RegisterBlockBehaviour<BlockSlowFall>(new BehaviourSlowFall());
                         break;
                     case ModItems.SolidWater:
-                        _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
+                        if (!isSolidWaterRegistered)
+                        {
+                            _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
+                            isSolidWaterRegistered = true;
+                        }
+                        break;
+                    case ModItems.FrozenWater:
+                        if (!isSolidWaterRegistered)
+                        {
+                            _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
+                            isSolidWaterRegistered = true;
+                        }
+                        _ = body.RegisterBlockBehaviour<BlockFrozenWater>(new BehaviourFrozenWater());
                         break;
                     case ModItems.None:
                     case ModItems.LongJump:
                     case ModItems.NeverWater:
                     case ModItems.AlwaysWater:
+                    case ModItems.NeverIce:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

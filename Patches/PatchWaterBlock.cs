@@ -18,7 +18,8 @@ namespace MetroidvaniaItems.Patches
                 return;
             }
 
-            if (ModEntry.DataItems.Active == ModItems.SolidWater && BehaviourSolidWater.IsSolid)
+            if ((ModEntry.DataItems.Active == ModItems.FrozenWater ||
+                ModEntry.DataItems.Active == ModItems.SolidWater) && BehaviourSolidWater.IsSolid)
             {
                 __result = true;
             }

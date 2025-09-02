@@ -4,71 +4,70 @@
     using System.IO;
     using System.Reflection;
     using JumpKing;
+    using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
 
     public static class ModResources
     {
+        private static Point SpritesheetCells { get; } = new Point(4, 4);
+
         // Menu
-        public static Texture2D DefaultMenu { get; private set; }
-        public static Texture2D CustomMenu { get; private set; }
+        public static Sprite DefaultMenu { get; private set; }
+        public static Sprite CustomMenu { get; private set; }
 
         // None
-        private static Texture2D IconDefaultNone { get; set; }
-        private static Texture2D IconCustomNone { get; set; }
+        private static Sprite IconCustomNone { get; set; }
+        private static Sprite DefaultNone { get; set; }
 
         // Double Jump
-        private static Texture2D DefaultDoubleJump { get; set; }
-        private static Texture2D IconDefaultDoubleJump { get; set; }
-        private static Texture2D IconCustomDoubleJump { get; set; }
-        private static Texture2D CustomDoubleJump { get; set; }
+        private static Sprite IconCustomDoubleJump { get; set; }
+        private static Sprite DefaultDoubleJump { get; set; }
+        private static Sprite CustomDoubleJump { get; set; }
 
         // Long Jump
-        private static Texture2D IconDefaultLongJump { get; set; }
-        private static Texture2D IconCustomLongJump { get; set; }
-        private static Texture2D DefaultLongJump { get; set; }
-        private static Texture2D CustomLongJump { get; set; }
+        private static Sprite IconCustomLongJump { get; set; }
+        private static Sprite DefaultLongJump { get; set; }
+        private static Sprite CustomLongJump { get; set; }
 
         // Low Gravity
-        private static Texture2D IconDefaultLowGravity { get; set; }
-        private static Texture2D IconCustomLowGravity { get; set; }
-        private static Texture2D DefaultLowGravity { get; set; }
-        private static Texture2D CustomLowGravity { get; set; }
+        private static Sprite IconCustomLowGravity { get; set; }
+        private static Sprite DefaultLowGravity { get; set; }
+        private static Sprite CustomLowGravity { get; set; }
 
         // High Gravity
-        private static Texture2D IconDefaultHighGravity { get; set; }
-        private static Texture2D DefaultHighGravity { get; set; }
-        private static Texture2D IconCustomHighGravity { get; set; }
-        private static Texture2D CustomHighGravity { get; set; }
+        private static Sprite IconCustomHighGravity { get; set; }
+        private static Sprite DefaultHighGravity { get; set; }
+        private static Sprite CustomHighGravity { get; set; }
 
         // Slow Fall
-        private static Texture2D IconDefaultSlowFall { get; set; }
-        private static Texture2D IconCustomSlowFall { get; set; }
-        private static Texture2D DefaultSlowFall { get; set; }
-        private static Texture2D CustomSlowFall { get; set; }
+        private static Sprite IconCustomSlowFall { get; set; }
+        private static Sprite DefaultSlowFall { get; set; }
+        private static Sprite CustomSlowFall { get; set; }
 
         // Never Water
-        private static Texture2D IconDefaultNeverWater { get; set; }
-        private static Texture2D IconCustomNeverWater { get; set; }
-        private static Texture2D DefaultNeverWater { get; set; }
-        private static Texture2D CustomNeverWater { get; set; }
+        private static Sprite IconCustomNeverWater { get; set; }
+        private static Sprite DefaultNeverWater { get; set; }
+        private static Sprite CustomNeverWater { get; set; }
 
         // Always Water
-        private static Texture2D IconDefaultAlwaysWater { get; set; }
-        private static Texture2D IconCustomAlwaysWater { get; set; }
-        private static Texture2D DefaultAlwaysWater { get; set; }
-        private static Texture2D CustomAlwaysWater { get; set; }
+        private static Sprite IconCustomAlwaysWater { get; set; }
+        private static Sprite DefaultAlwaysWater { get; set; }
+        private static Sprite CustomAlwaysWater { get; set; }
 
         // Solid Water
-        private static Texture2D IconDefaultSolidWater { get; set; }
-        private static Texture2D IconCustomSolidWater { get; set; }
-        private static Texture2D DefaultSolidWater { get; set; }
-        private static Texture2D CustomSolidWater { get; set; }
+        private static Sprite IconCustomSolidWater { get; set; }
+        private static Sprite DefaultSolidWater { get; set; }
+        private static Sprite CustomSolidWater { get; set; }
+
+        // Frozen Water
+        private static Sprite IconCustomFrozenWater { get; set; }
+        private static Sprite DefaultFrozenWater { get; set; }
+        private static Sprite CustomFrozenWater { get; set; }
 
         // Always Ice
-        private static Texture2D IconDefaultNeverIce { get; set; }
-        private static Texture2D IconCustomNeverIce { get; set; }
-        private static Texture2D DefaultNeverIce { get; set; }
-        private static Texture2D CustomNeverIce { get; set; }
+        private static Sprite IconCustomNeverIce { get; set; }
+        private static Sprite DefaultNeverIce { get; set; }
+        private static Sprite CustomNeverIce { get; set; }
 
         public static void LoadDefaultTextures()
         {
@@ -76,42 +75,28 @@
             var dllPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ??
                           throw new InvalidOperationException();
 
-            var uiPath = Path.Combine(dllPath, "ui");
-            DefaultMenu = contentManager.Load<Texture2D>(Path.Combine(uiPath, "Menu"));
+            var spriteSheet = contentManager.Load<Texture2D>(Path.Combine(dllPath, "Sprites"));
+            var spriteArray = SpriteChopUtilGrid(spriteSheet, SpritesheetCells, Vector2.Zero, spriteSheet.Bounds);
 
-            var iconPath = Path.Combine(dllPath, "icons");
-            IconDefaultNone = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.None)));
+            // The first sprite is the menu, as such all items are their enum index + 1
+            DefaultMenu = spriteArray[0];
 
-            IconDefaultDoubleJump = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.DoubleJump)));
-            IconDefaultLongJump = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.LongJump)));
+            DefaultNone = spriteArray[(int)ModItems.None + 1];
 
-            IconDefaultLowGravity = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.LowGravity)));
-            IconDefaultHighGravity =
-                contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.HighGravity)));
+            DefaultDoubleJump = spriteArray[(int)ModItems.DoubleJump + 1];
+            DefaultLongJump = spriteArray[(int)ModItems.LongJump + 1];
 
-            IconDefaultSlowFall = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.SlowFall)));
+            DefaultLowGravity = spriteArray[(int)ModItems.LowGravity + 1];
+            DefaultHighGravity = spriteArray[(int)ModItems.HighGravity + 1];
 
-            IconDefaultNeverWater = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.NeverWater)));
-            IconDefaultAlwaysWater =
-                contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
-            IconDefaultSolidWater = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.SolidWater)));
+            DefaultSlowFall = spriteArray[(int)ModItems.SlowFall + 1];
 
-            IconDefaultNeverIce = contentManager.Load<Texture2D>(Path.Combine(iconPath, nameof(ModItems.NeverIce)));
+            DefaultNeverWater = spriteArray[(int)ModItems.NeverWater + 1];
+            DefaultAlwaysWater = spriteArray[(int)ModItems.AlwaysWater + 1];
+            DefaultSolidWater = spriteArray[(int)ModItems.SolidWater + 1];
+            DefaultFrozenWater = spriteArray[(int)ModItems.FrozenWater + 1];
 
-            var itemPath = Path.Combine(dllPath, "items");
-            DefaultDoubleJump = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
-            DefaultLongJump = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.LongJump)));
-
-            DefaultLowGravity = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.LowGravity)));
-            DefaultHighGravity = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.HighGravity)));
-
-            DefaultSlowFall = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.SlowFall)));
-
-            DefaultNeverWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.NeverWater)));
-            DefaultAlwaysWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
-            DefaultSolidWater = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.SolidWater)));
-
-            DefaultNeverIce = contentManager.Load<Texture2D>(Path.Combine(itemPath, nameof(ModItems.NeverIce)));
+            DefaultNeverIce = spriteArray[(int)ModItems.NeverIce + 1];
         }
 
         public static void LoadCustomTextures()
@@ -120,90 +105,116 @@
             var modFolderPath = Path.Combine(contentManager.root, "metroidvania");
 
             var uiPath = Path.Combine(modFolderPath, "ui");
-            CustomMenu = GetOptionalTexture(contentManager, Path.Combine(uiPath, "Menu"));
+            CustomMenu = GetOptionalSprite(contentManager, Path.Combine(uiPath, "Menu"));
 
             var iconPath = Path.Combine(modFolderPath, "icons");
-            IconCustomNone = GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.None)));
+            IconCustomNone = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.None)));
 
             IconCustomDoubleJump =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.DoubleJump)));
-            IconCustomLongJump = GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.LongJump)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.DoubleJump)));
+            IconCustomLongJump = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LongJump)));
 
             IconCustomLowGravity =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.LowGravity)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LowGravity)));
             IconCustomHighGravity =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.HighGravity)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.HighGravity)));
 
-            IconCustomSlowFall = GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.SlowFall)));
+            IconCustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SlowFall)));
 
             IconCustomNeverWater =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWater)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWater)));
             IconCustomAlwaysWater =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
             IconCustomSolidWater =
-                GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.SolidWater)));
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SolidWater)));
+            IconCustomFrozenWater =
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FrozenWater)));
 
-            IconCustomNeverIce = GetOptionalTexture(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
+            IconCustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
 
             var itemPath = Path.Combine(modFolderPath, "items");
-            CustomDoubleJump = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
-            CustomLongJump = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
+            CustomDoubleJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
+            CustomLongJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
 
-            CustomLowGravity = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.LowGravity)));
-            CustomHighGravity =
-                GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.HighGravity)));
+            CustomLowGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LowGravity)));
+            CustomHighGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.HighGravity)));
 
-            CustomSlowFall = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.SlowFall)));
+            CustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SlowFall)));
 
-            CustomNeverWater = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWater)));
-            CustomAlwaysWater =
-                GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
-            CustomSolidWater = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.SolidWater)));
+            CustomNeverWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWater)));
+            CustomAlwaysWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
+            CustomSolidWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SolidWater)));
+            CustomFrozenWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FrozenWater)));
 
-            CustomNeverIce = GetOptionalTexture(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
+            CustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
         }
 
-        private static Texture2D GetOptionalTexture(JKContentManager contentManager, string texturePath)
+        private static Sprite[] SpriteChopUtilGrid(Texture2D texture, Point cells, Vector2 center, Rectangle source)
+        {
+            var cellWidth = source.Width / cells.X;
+            var cellHeight = source.Height / cells.Y;
+            var spriteArray = new Sprite[cells.X * cells.Y];
+            for (var i = 0; i < cells.X; i++)
+            {
+                for (var j = 0; j < cells.Y; j++)
+                {
+                    spriteArray[i + (j * cells.X)] = Sprite.CreateSpriteWithCenter(
+                        texture,
+                        new Rectangle(
+                            source.X + (cellWidth * i),
+                            source.Y + (cellHeight * j),
+                            cellWidth,
+                            cellHeight),
+                        center);
+                }
+            }
+
+            return spriteArray;
+        }
+
+        private static Sprite GetOptionalSprite(JKContentManager contentManager, string texturePath)
             => File.Exists(texturePath + ".xnb")
-                ? contentManager.Load<Texture2D>(texturePath)
+                ? Sprite.CreateSprite(contentManager.Load<Texture2D>(texturePath))
                 : null;
 
-        public static Texture2D GetIconByType(ModItems type)
+        public static Sprite GetIconByType(ModItems type)
         {
             switch (type)
             {
                 case ModItems.None:
-                    return IconCustomNone ?? IconDefaultNone;
+                    return IconCustomNone ?? DefaultNone;
 
                 case ModItems.DoubleJump:
-                    return IconCustomDoubleJump ?? IconDefaultDoubleJump;
+                    return IconCustomDoubleJump ?? DefaultDoubleJump;
                 case ModItems.LongJump:
-                    return IconCustomLongJump ?? IconDefaultLongJump;
+                    return IconCustomLongJump ?? DefaultLongJump;
 
                 case ModItems.LowGravity:
-                    return IconCustomLowGravity ?? IconDefaultLowGravity;
+                    return IconCustomLowGravity ?? DefaultLowGravity;
                 case ModItems.HighGravity:
-                    return IconCustomHighGravity ?? IconDefaultHighGravity;
+                    return IconCustomHighGravity ?? DefaultHighGravity;
 
                 case ModItems.SlowFall:
-                    return IconCustomSlowFall ?? IconDefaultSlowFall;
+                    return IconCustomSlowFall ?? DefaultSlowFall;
 
                 case ModItems.NeverWater:
-                    return IconCustomNeverWater ?? IconDefaultNeverWater;
+                    return IconCustomNeverWater ?? DefaultNeverWater;
                 case ModItems.AlwaysWater:
-                    return IconCustomAlwaysWater ?? IconDefaultAlwaysWater;
+                    return IconCustomAlwaysWater ?? DefaultAlwaysWater;
                 case ModItems.SolidWater:
-                    return IconCustomSolidWater ?? IconDefaultSolidWater;
+                    return IconCustomSolidWater ?? DefaultSolidWater;
+                case ModItems.FrozenWater:
+                    return IconCustomFrozenWater ?? DefaultFrozenWater;
 
                 case ModItems.NeverIce:
-                    return IconCustomNeverIce ?? IconDefaultNeverIce;
+                    return IconCustomNeverIce ?? DefaultNeverIce;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 
-        public static Texture2D GetInWorldByType(ModItems type)
+        public static Sprite GetInWorldByType(ModItems type)
         {
             switch (type)
             {
@@ -229,6 +240,8 @@
                     return CustomAlwaysWater ?? DefaultAlwaysWater;
                 case ModItems.SolidWater:
                     return CustomSolidWater ?? DefaultSolidWater;
+                case ModItems.FrozenWater:
+                    return CustomFrozenWater ?? DefaultFrozenWater;
 
                 case ModItems.NeverIce:
                     return CustomNeverIce ?? DefaultNeverIce;

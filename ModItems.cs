@@ -15,6 +15,7 @@
         NeverWater,
         AlwaysWater,
         SolidWater,
+        FrozenWater,
 
         NeverIce
     }

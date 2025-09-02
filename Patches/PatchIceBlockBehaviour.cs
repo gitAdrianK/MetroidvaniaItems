@@ -2,6 +2,7 @@
 
 namespace MetroidvaniaItems.Patches
 {
+    using Behaviours;
     using HarmonyLib;
     using JetBrains.Annotations;
     using JumpKing.BlockBehaviours;
@@ -17,9 +18,14 @@ namespace MetroidvaniaItems.Patches
                 return;
             }
 
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
             if (ModEntry.DataItems.Active == ModItems.NeverIce)
             {
                 __result = false;
+            }
+            else if (ModEntry.DataItems.Active == ModItems.FrozenWater && BehaviourFrozenWater.IsOnFrozenWater)
+            {
+                __result = true;
             }
         }
     }

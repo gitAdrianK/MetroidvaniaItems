@@ -1,0 +1,14 @@
+﻿namespace MetroidvaniaItems.Blocks
+{
+    using JetBrains.Annotations;
+    using JumpKing.Level;
+    using Microsoft.Xna.Framework;
+
+    [UsedImplicitly]
+    public class BlockFrozenWater : BoxBlock
+    {
+        public BlockFrozenWater(Rectangle pCollider) : base(pCollider)
+        {
+        }
+    }
+}

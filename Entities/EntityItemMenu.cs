@@ -6,18 +6,21 @@ namespace MetroidvaniaItems.Entities
     using JumpKing;
     using JumpKing.Player;
     using Microsoft.Xna.Framework;
-    using Microsoft.Xna.Framework.Graphics;
 
     public class EntityItemMenu : Entity
     {
-        public EntityItemMenu(PlayerEntity player, Texture2D texture)
+        public EntityItemMenu(PlayerEntity player, Sprite spriteMenu)
         {
             this.Player = player;
-            this.Texture = texture;
+            this.SpriteMenu = spriteMenu;
+            this.Width = spriteMenu.source.Width;
+            this.Height = spriteMenu.source.Height;
         }
 
         private PlayerEntity Player { get; }
-        private Texture2D Texture { get; }
+        private Sprite SpriteMenu { get; }
+        private int Width { get; }
+        private int Height { get; }
         private static int Padding => 2;
 
         public override void Draw()
@@ -32,41 +35,30 @@ namespace MetroidvaniaItems.Entities
             var positionY = this.Player.m_body.Position.Y + hitbox.Height - (hitbox.Height * 0.2f) +
                             (Camera.CurrentScreen * 360);
 
-            Game1.spriteBatch.Draw(
-                this.Texture,
-                new Vector2(
-                    (int)(positionX - (this.Texture.Width / 2) + Padding),
-                    (int)(positionY - (this.Texture.Height / 2) - Padding)),
-                Color.White);
-
             var items = ModEntry.DataItems.GetNeighbors(ModEntry.DataItems.Hovering);
-            var texturePrev = ModResources.GetIconByType(items[0]);
-            var textureCurr = ModResources.GetIconByType(items[1]);
-            var textureNext = ModResources.GetIconByType(items[2]);
+            var spritePrev = ModResources.GetIconByType(items[0]);
+            var spriteCurr = ModResources.GetIconByType(items[1]);
+            var spriteNext = ModResources.GetIconByType(items[2]);
 
-            var iconWidthHalf = textureCurr.Width / 2;
-            var iconHeightHalf = textureCurr.Height / 2;
+            var iconWidthHalf = this.Width / 2;
+            var iconHeightHalf = this.Height / 2;
 
-            Game1.spriteBatch.Draw(
-                texturePrev,
-                new Vector2(
-                    (int)(positionX - iconWidthHalf - textureCurr.Width - Padding),
-                    (int)(positionY - iconHeightHalf) - Padding),
-                new Color(128, 128, 128, 128));
+            this.SpriteMenu.Draw(new Vector2(
+                (int)(positionX - (this.Width / 2) + Padding),
+                (int)(positionY - (this.Height / 2) - Padding)));
 
-            Game1.spriteBatch.Draw(
-                textureCurr,
-                new Vector2(
-                    (int)(positionX - iconWidthHalf + Padding),
-                    (int)(positionY - iconHeightHalf) - Padding),
-                Color.White);
+            spritePrev.Draw(new Vector2(
+                (int)(positionX - iconWidthHalf - this.Width - Padding),
+                (int)(positionY - iconHeightHalf) - Padding));
 
-            Game1.spriteBatch.Draw(
-                textureNext,
-                new Vector2(
-                    (int)(positionX + iconWidthHalf + textureCurr.Width + Padding),
-                    (int)(positionY - iconHeightHalf) - Padding),
-                new Color(128, 128, 128, 128));
+            spriteCurr.Draw(new Vector2(
+                (int)(positionX - iconWidthHalf + Padding),
+                (int)(positionY - iconHeightHalf) - Padding));
+
+            spriteNext.Draw(new Vector2(
+                (int)(positionX + iconWidthHalf + this.Width + Padding),
+                (int)(positionY - iconHeightHalf) - Padding));
+
         }
     }
 }
