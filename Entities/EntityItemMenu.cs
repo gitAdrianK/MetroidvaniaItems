@@ -44,8 +44,8 @@ namespace MetroidvaniaItems.Entities
             var iconHeightHalf = this.Height / 2;
 
             this.SpriteMenu.Draw(new Vector2(
-                (int)(positionX - (this.Width / 2) + Padding),
-                (int)(positionY - (this.Height / 2) - Padding)));
+                (int)(positionX - iconWidthHalf + Padding),
+                (int)(positionY - iconHeightHalf - Padding)));
 
             spritePrev.Draw(new Vector2(
                 (int)(positionX - iconWidthHalf - this.Width - Padding),
@@ -56,7 +56,7 @@ namespace MetroidvaniaItems.Entities
                 (int)(positionY - iconHeightHalf) - Padding));
 
             spriteNext.Draw(new Vector2(
-                (int)(positionX + iconWidthHalf + this.Width + Padding),
+                (int)(positionX + iconWidthHalf + Padding),
                 (int)(positionY - iconHeightHalf) - Padding));
         }
     }
