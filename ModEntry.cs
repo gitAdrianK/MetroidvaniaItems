@@ -103,6 +103,7 @@ namespace MetroidvaniaItems
                             _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
                             isSolidWaterRegistered = true;
                         }
+
                         break;
                     case ModItems.FrozenWater:
                         if (!isSolidWaterRegistered)
@@ -110,6 +111,7 @@ namespace MetroidvaniaItems
                             _ = body.RegisterBlockBehaviour<BlockSolidWater>(new BehaviourSolidWater());
                             isSolidWaterRegistered = true;
                         }
+
                         _ = body.RegisterBlockBehaviour<BlockFrozenWater>(new BehaviourFrozenWater());
                         break;
                     case ModItems.None:
@@ -117,6 +119,8 @@ namespace MetroidvaniaItems
                     case ModItems.NeverWater:
                     case ModItems.AlwaysWater:
                     case ModItems.NeverIce:
+                    case ModItems.NeverWind:
+                    case ModItems.ReverseWind:
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

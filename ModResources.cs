@@ -9,6 +9,8 @@
 
     public static class ModResources
     {
+        // Rust macros could make this prettier
+
         private static Point SpritesheetCells { get; } = new Point(4, 4);
 
         // Menu
@@ -69,6 +71,16 @@
         private static Sprite DefaultNeverIce { get; set; }
         private static Sprite CustomNeverIce { get; set; }
 
+        // Never Wind
+        private static Sprite IconCustomNeverWind { get; set; }
+        private static Sprite DefaultNeverWind { get; set; }
+        private static Sprite CustomNeverWind { get; set; }
+
+        // Reverse Wind
+        private static Sprite IconCustomReverseWind { get; set; }
+        private static Sprite DefaultReverseWind { get; set; }
+        private static Sprite CustomReverseWind { get; set; }
+
         public static void LoadDefaultTextures()
         {
             var contentManager = Game1.instance.contentManager;
@@ -97,6 +109,9 @@
             DefaultFrozenWater = spriteArray[(int)ModItems.FrozenWater + 1];
 
             DefaultNeverIce = spriteArray[(int)ModItems.NeverIce + 1];
+
+            DefaultNeverWind = spriteArray[(int)ModItems.NeverWind + 1];
+            DefaultReverseWind = spriteArray[(int)ModItems.ReverseWind + 1];
         }
 
         public static void LoadCustomTextures()
@@ -132,6 +147,10 @@
 
             IconCustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
 
+            IconCustomNeverWind = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWind)));
+            IconCustomReverseWind =
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.ReverseWind)));
+
             var itemPath = Path.Combine(modFolderPath, "items");
             CustomDoubleJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
             CustomLongJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
@@ -147,6 +166,9 @@
             CustomFrozenWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FrozenWater)));
 
             CustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
+
+            CustomNeverWind = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWind)));
+            CustomReverseWind = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.ReverseWind)));
         }
 
         private static Sprite[] SpriteChopUtilGrid(Texture2D texture, Point cells, Vector2 center, Rectangle source)
@@ -209,6 +231,11 @@
                 case ModItems.NeverIce:
                     return IconCustomNeverIce ?? DefaultNeverIce;
 
+                case ModItems.NeverWind:
+                    return IconCustomNeverWind ?? DefaultNeverWind;
+                case ModItems.ReverseWind:
+                    return IconCustomReverseWind ?? DefaultReverseWind;
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
@@ -245,6 +272,11 @@
 
                 case ModItems.NeverIce:
                     return CustomNeverIce ?? DefaultNeverIce;
+
+                case ModItems.NeverWind:
+                    return CustomNeverWind ?? DefaultNeverWind;
+                case ModItems.ReverseWind:
+                    return CustomReverseWind ?? DefaultReverseWind;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

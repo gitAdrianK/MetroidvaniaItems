@@ -58,7 +58,6 @@ namespace MetroidvaniaItems.Entities
             spriteNext.Draw(new Vector2(
                 (int)(positionX + iconWidthHalf + this.Width + Padding),
                 (int)(positionY - iconHeightHalf) - Padding));
-
         }
     }
 }

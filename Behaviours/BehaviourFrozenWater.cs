@@ -1,6 +1,5 @@
 ﻿namespace MetroidvaniaItems.Behaviours
 {
-    using System.Diagnostics;
     using JumpKing.API;
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Level;
