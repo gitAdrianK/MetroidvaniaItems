@@ -10,7 +10,7 @@ namespace MetroidvaniaItems.Patches
     public static class PatchJumpStateDoJump
     {
         [UsedImplicitly]
-        public static void Postfix(JumpState __instance, float p_intensity)
+        public static void Postfix(JumpState __instance)
         {
             if (ModEntry.DataItems is null)
             {
