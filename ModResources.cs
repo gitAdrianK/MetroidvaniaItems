@@ -41,6 +41,11 @@
         private static Sprite DefaultHighGravity { get; set; }
         private static Sprite CustomHighGravity { get; set; }
 
+        // Fast High Gravity
+        private static Sprite IconCustomFastHighGravity { get; set; }
+        private static Sprite DefaultFastHighGravity { get; set; }
+        private static Sprite CustomFastHighGravity { get; set; }
+
         // Slow Fall
         private static Sprite IconCustomSlowFall { get; set; }
         private static Sprite DefaultSlowFall { get; set; }
@@ -100,6 +105,7 @@
 
             DefaultLowGravity = spriteArray[(int)ModItems.LowGravity + 1];
             DefaultHighGravity = spriteArray[(int)ModItems.HighGravity + 1];
+            DefaultFastHighGravity = spriteArray[(int)ModItems.FastHighGravity + 1];
 
             DefaultSlowFall = spriteArray[(int)ModItems.SlowFall + 1];
 
@@ -133,6 +139,8 @@
                 GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LowGravity)));
             IconCustomHighGravity =
                 GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.HighGravity)));
+            IconCustomFastHighGravity =
+                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FastHighGravity)));
 
             IconCustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SlowFall)));
 
@@ -157,6 +165,8 @@
 
             CustomLowGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LowGravity)));
             CustomHighGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.HighGravity)));
+            CustomFastHighGravity =
+                GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FastHighGravity)));
 
             CustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SlowFall)));
 
@@ -215,6 +225,8 @@
                     return IconCustomLowGravity ?? DefaultLowGravity;
                 case ModItems.HighGravity:
                     return IconCustomHighGravity ?? DefaultHighGravity;
+                case ModItems.FastHighGravity:
+                    return IconCustomFastHighGravity ?? DefaultFastHighGravity;
 
                 case ModItems.SlowFall:
                     return IconCustomSlowFall ?? DefaultSlowFall;
@@ -257,6 +269,8 @@
                     return CustomLowGravity ?? DefaultLowGravity;
                 case ModItems.HighGravity:
                     return CustomHighGravity ?? DefaultHighGravity;
+                case ModItems.FastHighGravity:
+                    return CustomFastHighGravity ?? DefaultFastHighGravity;
 
                 case ModItems.SlowFall:
                     return CustomSlowFall ?? DefaultSlowFall;

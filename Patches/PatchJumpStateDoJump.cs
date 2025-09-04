@@ -7,7 +7,7 @@ namespace MetroidvaniaItems.Patches
     using JumpKing.Player;
 
     [HarmonyPatch(typeof(JumpState), "DoJump")]
-    public static class PatchJumpState
+    public static class PatchJumpStateDoJump
     {
         [UsedImplicitly]
         public static void Postfix(JumpState __instance, float p_intensity)

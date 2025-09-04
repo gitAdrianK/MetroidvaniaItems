@@ -11,6 +11,7 @@
         // Gravity related
         LowGravity,
         HighGravity,
+        FastHighGravity, // Expansion blocks Rain Gravity
 
         // Fall related?
         SlowFall,

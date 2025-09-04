@@ -93,6 +93,9 @@ namespace MetroidvaniaItems
                     case ModItems.HighGravity:
                         _ = body.RegisterBlockBehaviour<BlockHighGravity>(new BehaviourHighGravity());
                         break;
+                    case ModItems.FastHighGravity:
+                        _ = body.RegisterBlockBehaviour<BlockFastHighGravity>(new BehaviourFastHighGravity());
+                        break;
                     case ModItems.SlowFall:
                         // I'm Mary Poppins y'all
                         _ = body.RegisterBlockBehaviour<BlockSlowFall>(new BehaviourSlowFall());
