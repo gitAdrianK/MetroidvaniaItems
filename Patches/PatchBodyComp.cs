@@ -12,12 +12,12 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(ref float __result)
         {
-            if (ModEntry.DataItems is null)
+            if (ModEntry.DataMetroidvania is null)
             {
                 return;
             }
 
-            if (ModEntry.DataItems.Active == ModItems.FastHighGravity)
+            if (ModEntry.DataMetroidvania.Active == ModItems.FastHighGravity)
             {
                 __result *= 1.28f;
             }

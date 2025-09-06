@@ -14,12 +14,15 @@
         public float BlockPriority => 2.0f;
 
         public float ModifyXVelocity(float inputXVelocity, BehaviourContext behaviourContext)
-            => inputXVelocity * (ModEntry.DataItems.Active == ModItems.HighGravity ? HighGravXMoveMultiplier : 1.0f);
+            => inputXVelocity * (ModEntry.DataMetroidvania.Active == ModItems.HighGravity
+                ? HighGravXMoveMultiplier
+                : 1.0f);
 
         public float ModifyYVelocity(float inputYVelocity, BehaviourContext behaviourContext) => inputYVelocity;
 
         public float ModifyGravity(float inputGravity, BehaviourContext behaviourContext)
-            => inputGravity * (ModEntry.DataItems.Active == ModItems.HighGravity ? HighGravYMoveMultiplier : 1.0f);
+            => inputGravity *
+               (ModEntry.DataMetroidvania.Active == ModItems.HighGravity ? HighGravYMoveMultiplier : 1.0f);
 
         public bool AdditionalXCollisionCheck(AdvCollisionInfo info, BehaviourContext behaviourContext) => false;
 

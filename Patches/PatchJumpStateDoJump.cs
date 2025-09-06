@@ -12,12 +12,12 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(JumpState __instance)
         {
-            if (ModEntry.DataItems is null)
+            if (ModEntry.DataMetroidvania is null)
             {
                 return;
             }
 
-            if (ModEntry.DataItems.Active != ModItems.LongJump)
+            if (ModEntry.DataMetroidvania.Active != ModItems.LongJump)
             {
                 return;
             }

@@ -17,7 +17,7 @@
         public float ModifyXVelocity(float inputXVelocity, BehaviourContext behaviourContext)
         {
             var modifier = 1.0f;
-            if (ModEntry.DataItems.Active == ModItems.LowGravity)
+            if (ModEntry.DataMetroidvania.Active == ModItems.LowGravity)
             {
                 modifier = behaviourContext.BodyComp.IsOnGround
                     ? LowGravXMoveMultiplierOnGround
@@ -30,7 +30,7 @@
         public float ModifyYVelocity(float inputYVelocity, BehaviourContext behaviourContext)
         {
             var bodyComp = behaviourContext.BodyComp;
-            var isLowGravity = ModEntry.DataItems.Active == ModItems.LowGravity;
+            var isLowGravity = ModEntry.DataMetroidvania.Active == ModItems.LowGravity;
 
             var modifier = isLowGravity ? LowGravYMoveMultiplier : 1.0f;
 
@@ -47,7 +47,8 @@
         }
 
         public float ModifyGravity(float inputGravity, BehaviourContext behaviourContext)
-            => inputGravity * (ModEntry.DataItems.Active == ModItems.LowGravity ? LowGravGravityMultiplier : 1.0f);
+            => inputGravity *
+               (ModEntry.DataMetroidvania.Active == ModItems.LowGravity ? LowGravGravityMultiplier : 1.0f);
 
         public bool AdditionalXCollisionCheck(AdvCollisionInfo info, BehaviourContext behaviourContext) => false;
 

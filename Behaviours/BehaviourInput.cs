@@ -1,13 +1,20 @@
 ﻿namespace MetroidvaniaItems.Behaviours
 {
+    using System;
+    using Data;
     using JumpKing;
     using JumpKing.API;
     using JumpKing.BodyCompBehaviours;
     using JumpKing.Controller;
     using JumpKing.Level;
+    using JumpKing.XnaWrappers;
+    using Util;
 
     public class BehaviourInput : IBlockBehaviour
     {
+        private JKSound Select { get; } = Game1.instance.contentManager.audio.menu.Select;
+        private JKSound CursorMove { get; } = Game1.instance.contentManager.audio.menu.CursorMove;
+
         public bool IsPlayerOnBlock { get; set; } = false;
         public float BlockPriority => 2.0f;
 
@@ -24,45 +31,87 @@
         public bool ExecuteBlockBehaviour(BehaviourContext behaviourContext)
         {
             var pressedPadState = ControllerManager.instance.GetPressedPadState();
-            if (!behaviourContext.BodyComp.IsOnGround || pressedPadState.jump)
+            var data = ModEntry.DataMetroidvania;
+
+            switch (data.MenuState)
             {
-                // Close the menu for pretty much all actions unrelated to the menu
-                ModEntry.IsInMenu = false;
-                return true;
+                case MenuState.Closed:
+                case MenuState.Previous:
+                    this.HandleClosed(data, pressedPadState);
+                    break;
+                case MenuState.Select:
+                    this.HandleSelect(behaviourContext, data, pressedPadState);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
-            var data = ModEntry.DataItems;
+            return true;
+        }
+
+        private void HandleClosed(DataMetroidvania data, PadState pressedPadState)
+        {
             if (pressedPadState.down)
             {
-                if (!ModEntry.IsInMenu)
-                {
-                    data.Hovering = data.Active;
-                }
-                else
-                {
-                    data.Active = data.Hovering;
-                    Game1.instance.contentManager.audio.menu.Select.PlayOneShot();
-                }
-
-                ModEntry.IsInMenu = !ModEntry.IsInMenu;
+                data.MenuState = MenuState.Select;
+                data.Hovering = data.Active;
+                return;
             }
 
-            if (!ModEntry.IsInMenu)
+            if (pressedPadState.up)
             {
-                return true;
+                this.DoQuickSwitch(data);
+            }
+        }
+
+        private void DoQuickSwitch(DataMetroidvania data)
+        {
+            data.MenuDuration = 1.0f;
+            data.MenuState = MenuState.Previous;
+            data.Active = data.Active == ModItems.None ? data.Previous : ModItems.None;
+
+            this.Select.PlayOneShot();
+        }
+
+        private void HandleSelect(BehaviourContext behaviourContext, DataMetroidvania data, PadState pressedPadState)
+        {
+            if (!behaviourContext.BodyComp.IsOnGround || pressedPadState.jump)
+            {
+                // Close the menu when jumping or in air in general
+                data.MenuState = MenuState.Closed;
+                return;
             }
 
-            var next = data.GetNeighbors(data.Hovering);
+            if (pressedPadState.up)
+            {
+                this.DoQuickSwitch(data);
+                return;
+            }
+
+            if (pressedPadState.down)
+            {
+                data.MenuState = MenuState.Closed;
+                data.Active = data.Hovering;
+                if (data.Hovering != ModItems.None)
+                {
+                    data.Previous = data.Hovering;
+                }
+
+                this.Select.PlayOneShot();
+                return;
+            }
+
+            var next = data.GetNeighbours(data.Hovering);
             if (pressedPadState.left)
             {
                 data.Hovering = next[0];
+                this.CursorMove.PlayOneShot();
             }
             else if (pressedPadState.right)
             {
                 data.Hovering = next[2];
+                this.CursorMove.PlayOneShot();
             }
-
-            return true;
         }
     }
 }

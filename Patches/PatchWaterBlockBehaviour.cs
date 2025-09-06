@@ -12,17 +12,17 @@ namespace MetroidvaniaItems.Patches
         [UsedImplicitly]
         public static void Postfix(ref bool __result)
         {
-            if (ModEntry.DataItems is null)
+            if (ModEntry.DataMetroidvania is null)
             {
                 return;
             }
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (ModEntry.DataItems.Active == ModItems.NeverWater)
+            if (ModEntry.DataMetroidvania.Active == ModItems.NeverWater)
             {
                 __result = false;
             }
-            else if (ModEntry.DataItems.Active == ModItems.AlwaysWater)
+            else if (ModEntry.DataMetroidvania.Active == ModItems.AlwaysWater)
             {
                 __result = true;
             }

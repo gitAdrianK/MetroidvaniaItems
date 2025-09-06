@@ -41,7 +41,7 @@
                 return;
             }
 
-            var data = ModEntry.DataItems;
+            var data = ModEntry.DataMetroidvania;
             if (!data.Owned.Contains(this.Type))
             {
                 data.Owned.Add(this.Type);

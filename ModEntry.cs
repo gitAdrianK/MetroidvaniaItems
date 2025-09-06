@@ -22,9 +22,7 @@ namespace MetroidvaniaItems
         private const string Identifier = "Zebra.MetroidvaniaItems";
         private const string HarmonyIdentifier = Identifier + ".Harmony";
 
-        public static DataItems DataItems { get; private set; }
-
-        public static bool IsInMenu { get; set; }
+        public static DataMetroidvania DataMetroidvania { get; private set; }
 
         /// <summary>
         ///     Called by Jump King before the level loads
@@ -70,7 +68,7 @@ namespace MetroidvaniaItems
                 return;
             }
 
-            DataItems = DataItems.ReadFromFile();
+            DataMetroidvania = DataMetroidvania.ReadFromFile();
             ModResources.LoadCustomTextures();
             var loadedTypes = ModEntities.LoadEntities(xmlFile, player);
 
@@ -138,8 +136,8 @@ namespace MetroidvaniaItems
         [OnLevelEnd]
         public static void OnLevelEnd()
         {
-            DataItems?.SaveToFile();
-            DataItems = null;
+            DataMetroidvania?.SaveToFile();
+            DataMetroidvania = null;
         }
     }
 }

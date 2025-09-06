@@ -9,15 +9,19 @@
     using JumpKing;
     using JumpKing.SaveThread;
     using Microsoft.Xna.Framework;
+    using Util;
 
-    public class DataItems
+    public class DataMetroidvania
     {
         public ModItems Active { get; set; } = ModItems.None;
+        public ModItems Previous { get; set; } = ModItems.None;
         public ModItems Hovering { get; set; } = ModItems.None;
         public List<ModItems> Owned { get; private set; } = new List<ModItems> { ModItems.None };
         public List<Vector3> Collected { get; private set; } = new List<Vector3>();
+        public MenuState MenuState { get; set; }
+        public float MenuDuration { get; set; }
 
-        public static DataItems ReadFromFile()
+        public static DataMetroidvania ReadFromFile()
         {
             var file = Path.Combine(
                 Game1.instance.contentManager.root,
@@ -26,7 +30,7 @@
 
             if (SaveManager.instance.IsNewGame || !File.Exists(file))
             {
-                return new DataItems();
+                return new DataMetroidvania();
             }
 
             using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -35,12 +39,13 @@
                 var root = doc.Root;
                 if (root == null)
                 {
-                    return new DataItems();
+                    return new DataMetroidvania();
                 }
 
-                return new DataItems
+                return new DataMetroidvania
                 {
                     Active = (ModItems)Enum.Parse(typeof(ModItems), root.Element("Active")?.Value ?? "None"),
+                    Previous = (ModItems)Enum.Parse(typeof(ModItems), root.Element("Previous")?.Value ?? "None"),
                     Owned = root.Element("Owned")
                                 ?.Elements("Item")
                                 .Select(item => (ModItems)Enum.Parse(typeof(ModItems),
@@ -81,6 +86,7 @@
 
             var doc = new XElement("ItemData",
                 new XElement("Active", this.Active),
+                new XElement("Previous", this.Previous),
                 new XElement("Owned",
                     this.Owned.Select(c => new XElement("Item", c))),
                 new XElement("Collected",
@@ -103,7 +109,7 @@
             }
         }
 
-        public ModItems[] GetNeighbors(ModItems item)
+        public ModItems[] GetNeighbours(ModItems item)
         {
             var index = this.Owned.FindIndex(entry => entry.Equals(item));
             return new[]

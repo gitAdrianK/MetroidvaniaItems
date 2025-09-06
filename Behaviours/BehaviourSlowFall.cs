@@ -14,7 +14,7 @@
         public float ModifyYVelocity(float inputYVelocity, BehaviourContext behaviourContext) => inputYVelocity;
 
         public float ModifyGravity(float inputGravity, BehaviourContext behaviourContext)
-            => inputGravity * (ModEntry.DataItems.Active == ModItems.SlowFall
+            => inputGravity * (ModEntry.DataMetroidvania.Active == ModItems.SlowFall
                                && behaviourContext.BodyComp.Velocity.Y >= 0.0f
                 ? 0.25f
                 : 1.0f);

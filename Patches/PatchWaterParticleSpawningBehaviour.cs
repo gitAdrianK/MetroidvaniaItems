@@ -42,8 +42,8 @@
                 return code.AsEnumerable();
             }
 
-            var getterData = AccessTools.PropertyGetter(typeof(ModEntry), nameof(ModEntry.DataItems));
-            var getterActive = AccessTools.PropertyGetter(typeof(DataItems), nameof(DataItems.Active));
+            var getterData = AccessTools.PropertyGetter(typeof(ModEntry), nameof(ModEntry.DataMetroidvania));
+            var getterActive = AccessTools.PropertyGetter(typeof(DataMetroidvania), nameof(DataMetroidvania.Active));
             var continueLabel2 = il.DefineLabel();
 
             var insert = new List<CodeInstruction>
@@ -196,12 +196,12 @@ IL_009B: ldc.i4.2
 IL_009C: div
 IL_009D: sub
 IL_009E: stind.i4
-IL_009F: call      class [MetroidvaniaItems]MetroidvaniaItems.Data.DataItems [MetroidvaniaItems]MetroidvaniaItems.ModEntry::get_DataItems()
+IL_009F: call      class [MetroidvaniaItems]MetroidvaniaItems.Data.DataMetroidvania [MetroidvaniaItems]MetroidvaniaItems.ModEntry::get_DataItems()
 IL_00A4: brtrue.s  IL_00A8
 IL_00A6: ldc.i4.1
 IL_00A7: ret
-IL_00A8: call      class [MetroidvaniaItems]MetroidvaniaItems.Data.DataItems [MetroidvaniaItems]MetroidvaniaItems.ModEntry::get_DataItems()
-IL_00AD: callvirt  instance valuetype [MetroidvaniaItems]MetroidvaniaItems.ModItems [MetroidvaniaItems]MetroidvaniaItems.Data.DataItems::get_Active()
+IL_00A8: call      class [MetroidvaniaItems]MetroidvaniaItems.Data.DataMetroidvania [MetroidvaniaItems]MetroidvaniaItems.ModEntry::get_DataItems()
+IL_00AD: callvirt  instance valuetype [MetroidvaniaItems]MetroidvaniaItems.ModItems [MetroidvaniaItems]MetroidvaniaItems.Data.DataMetroidvania::get_Active()
 IL_00B2: ldc.i4.8
 IL_00B3: bne.un.s  IL_00B7
 IL_00B5: ldc.i4.1

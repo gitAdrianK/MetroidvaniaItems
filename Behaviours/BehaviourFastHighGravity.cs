@@ -16,7 +16,7 @@
 
         public float ModifyYVelocity(float inputYVelocity, BehaviourContext behaviourContext)
         {
-            if (ModEntry.DataItems.Active != ModItems.FastHighGravity)
+            if (ModEntry.DataMetroidvania.Active != ModItems.FastHighGravity)
             {
                 return inputYVelocity;
             }
@@ -33,7 +33,7 @@
         }
 
         public float ModifyGravity(float inputGravity, BehaviourContext behaviourContext)
-            => inputGravity * (ModEntry.DataItems.Active == ModItems.FastHighGravity ? 1.15f : 1.0f);
+            => inputGravity * (ModEntry.DataMetroidvania.Active == ModItems.FastHighGravity ? 1.15f : 1.0f);
 
         public bool AdditionalXCollisionCheck(AdvCollisionInfo info, BehaviourContext behaviourContext) => false;
 

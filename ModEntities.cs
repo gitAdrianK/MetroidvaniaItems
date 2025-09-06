@@ -58,11 +58,13 @@
                 .Where(item => item != null)
                 .ToList() ?? new List<Item>();
 
-            _ = new EntityItemMenu(player, ModResources.CustomMenu ?? ModResources.DefaultMenu);
+            var spriteMenu = ModResources.CustomMenu ?? ModResources.DefaultMenu;
+            var spriteSwitch = ModResources.CustomSwitch ?? ModResources.DefaultSwitch;
+            _ = new EntityItemMenu(ModEntry.DataMetroidvania, player, spriteMenu, spriteSwitch);
             foreach (var item in collection)
             {
                 loadedItems.Add(item.Type);
-                if (ModEntry.DataItems.Collected.Contains(new Vector3(item.Position, item.Screen)))
+                if (ModEntry.DataMetroidvania.Collected.Contains(new Vector3(item.Position, item.Screen)))
                 {
                     continue;
                 }

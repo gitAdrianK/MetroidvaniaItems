@@ -17,6 +17,10 @@
         public static Sprite DefaultMenu { get; private set; }
         public static Sprite CustomMenu { get; private set; }
 
+        // Switch
+        public static Sprite DefaultSwitch { get; private set; }
+        public static Sprite CustomSwitch { get; private set; }
+
         // None
         private static Sprite IconCustomNone { get; set; }
         private static Sprite DefaultNone { get; set; }
@@ -95,29 +99,30 @@
             var spriteSheet = contentManager.Load<Texture2D>(Path.Combine(dllPath, "Sprites"));
             var spriteArray = SpriteChopUtilGrid(spriteSheet, SpritesheetCells, Vector2.Zero, spriteSheet.Bounds);
 
-            // The first sprite is the menu, as such all items are their enum index + 1
+            // The first sprites are menu and switch, as such all items are their enum index + 2
             DefaultMenu = spriteArray[0];
+            DefaultSwitch = spriteArray[1];
 
-            DefaultNone = spriteArray[(int)ModItems.None + 1];
+            DefaultNone = spriteArray[(int)ModItems.None + 2];
 
-            DefaultDoubleJump = spriteArray[(int)ModItems.DoubleJump + 1];
-            DefaultLongJump = spriteArray[(int)ModItems.LongJump + 1];
+            DefaultDoubleJump = spriteArray[(int)ModItems.DoubleJump + 2];
+            DefaultLongJump = spriteArray[(int)ModItems.LongJump + 2];
 
-            DefaultLowGravity = spriteArray[(int)ModItems.LowGravity + 1];
-            DefaultHighGravity = spriteArray[(int)ModItems.HighGravity + 1];
-            DefaultFastHighGravity = spriteArray[(int)ModItems.FastHighGravity + 1];
+            DefaultLowGravity = spriteArray[(int)ModItems.LowGravity + 2];
+            DefaultHighGravity = spriteArray[(int)ModItems.HighGravity + 2];
+            DefaultFastHighGravity = spriteArray[(int)ModItems.FastHighGravity + 2];
 
-            DefaultSlowFall = spriteArray[(int)ModItems.SlowFall + 1];
+            DefaultSlowFall = spriteArray[(int)ModItems.SlowFall + 2];
 
-            DefaultNeverWater = spriteArray[(int)ModItems.NeverWater + 1];
-            DefaultAlwaysWater = spriteArray[(int)ModItems.AlwaysWater + 1];
-            DefaultSolidWater = spriteArray[(int)ModItems.SolidWater + 1];
-            DefaultFrozenWater = spriteArray[(int)ModItems.FrozenWater + 1];
+            DefaultNeverWater = spriteArray[(int)ModItems.NeverWater + 2];
+            DefaultAlwaysWater = spriteArray[(int)ModItems.AlwaysWater + 2];
+            DefaultSolidWater = spriteArray[(int)ModItems.SolidWater + 2];
+            DefaultFrozenWater = spriteArray[(int)ModItems.FrozenWater + 2];
 
-            DefaultNeverIce = spriteArray[(int)ModItems.NeverIce + 1];
+            DefaultNeverIce = spriteArray[(int)ModItems.NeverIce + 2];
 
-            DefaultNeverWind = spriteArray[(int)ModItems.NeverWind + 1];
-            DefaultReverseWind = spriteArray[(int)ModItems.ReverseWind + 1];
+            DefaultNeverWind = spriteArray[(int)ModItems.NeverWind + 2];
+            DefaultReverseWind = spriteArray[(int)ModItems.ReverseWind + 2];
         }
 
         public static void LoadCustomTextures()
@@ -127,6 +132,7 @@
 
             var uiPath = Path.Combine(modFolderPath, "ui");
             CustomMenu = GetOptionalSprite(contentManager, Path.Combine(uiPath, "Menu"));
+            CustomSwitch = GetOptionalSprite(contentManager, Path.Combine(uiPath, "Switch"));
 
             var iconPath = Path.Combine(modFolderPath, "icons");
             IconCustomNone = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.None)));

@@ -89,7 +89,7 @@
     <Compile Include="Blocks\BlockSlowFall.cs"/>
     <Compile Include="Blocks\BlockInput.cs"/>
     <Compile Include="Blocks\BlockSolidWater.cs"/>
-    <Compile Include="Data\DataItems.cs"/>
+    <Compile Include="Data\DataMetroidvania.cs"/>
     <Compile Include="Entities\EntityItemMenu.cs"/>
     <Compile Include="Entities\EntityItem.cs"/>
     <Compile Include="ModEntities.cs"/>
@@ -108,6 +108,7 @@
     <Compile Include="Patches\PatchWindManager.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs"/>
     <Compile Include="Util\Deserialization\Item.cs"/>
+    <Compile Include="Util\MenuState.cs"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config"/>
