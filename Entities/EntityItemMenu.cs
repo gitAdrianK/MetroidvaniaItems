@@ -28,7 +28,6 @@ namespace MetroidvaniaItems.Entities
         private Sprite SpriteSwitch { get; }
         private int Width { get; }
         private int Height { get; }
-        private static int Padding => 2;
 
         protected override void Update(float delta)
         {
@@ -83,20 +82,20 @@ namespace MetroidvaniaItems.Entities
             var iconHeightHalf = this.Height / 2;
 
             this.SpriteMenu.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf + Padding),
-                (int)(positionY - iconHeightHalf - Padding)));
+                (int)(positionX - iconWidthHalf),
+                (int)(positionY - iconHeightHalf)));
 
             spritePrev.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf - this.Width - Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX - iconWidthHalf - this.Width),
+                (int)(positionY - iconHeightHalf)));
 
             spriteCurr.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf + Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX - iconWidthHalf),
+                (int)(positionY - iconHeightHalf)));
 
             spriteNext.Draw(new Vector2(
-                (int)(positionX + iconWidthHalf + Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX + iconWidthHalf),
+                (int)(positionY - iconHeightHalf)));
         }
 
         private void DrawPrevious()
@@ -115,27 +114,27 @@ namespace MetroidvaniaItems.Entities
             if (this.Data.Active == ModItems.None)
             {
                 this.SpriteMenu.Draw(new Vector2(
-                    (int)(positionX - iconWidthHalf - this.Width - Padding),
-                    (int)(positionY - iconHeightHalf) - Padding));
+                    (int)(positionX - iconWidthHalf - this.Width),
+                    (int)(positionY - iconHeightHalf)));
             }
             else
             {
                 this.SpriteMenu.Draw(new Vector2(
-                    (int)(positionX + iconWidthHalf + Padding),
-                    (int)(positionY - iconHeightHalf) - Padding));
+                    (int)(positionX + iconWidthHalf),
+                    (int)(positionY - iconHeightHalf)));
             }
 
             spriteNone.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf - this.Width - Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX - iconWidthHalf - this.Width),
+                (int)(positionY - iconHeightHalf)));
 
             this.SpriteSwitch.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf + Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX - iconWidthHalf),
+                (int)(positionY - iconHeightHalf)));
 
             spritePrev.Draw(new Vector2(
-                (int)(positionX + iconWidthHalf + Padding),
-                (int)(positionY - iconHeightHalf) - Padding));
+                (int)(positionX + iconWidthHalf),
+                (int)(positionY - iconHeightHalf)));
         }
     }
 }
