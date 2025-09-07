@@ -6,7 +6,7 @@ namespace MetroidvaniaItems.Patches
     using JetBrains.Annotations;
     using JumpKing;
 
-    [HarmonyPatch(typeof(WindManager), "get_CurrentVelocityRaw")]
+    [HarmonyPatch(typeof(WindManager), nameof(WindManager.CurrentVelocityRaw), MethodType.Getter)]
     public static class PatchWindManager
     {
         [UsedImplicitly]

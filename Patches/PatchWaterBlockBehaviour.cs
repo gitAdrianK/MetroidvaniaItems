@@ -6,7 +6,7 @@ namespace MetroidvaniaItems.Patches
     using JetBrains.Annotations;
     using JumpKing.BlockBehaviours;
 
-    [HarmonyPatch(typeof(WaterBlockBehaviour), "get_IsPlayerOnBlock")]
+    [HarmonyPatch(typeof(WaterBlockBehaviour), nameof(WaterBlockBehaviour.IsPlayerOnBlock), MethodType.Getter)]
     public static class PatchWaterBlockBehaviour
     {
         [UsedImplicitly]
