@@ -1,17 +1,25 @@
 ﻿namespace MetroidvaniaItems
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
+    using System.Text.RegularExpressions;
+    using System.Xml.Linq;
     using JumpKing;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Graphics;
+    using Util.Deserialization;
 
     public static class ModResources
     {
-        // Rust macros could make this prettier
+        // Rust macros could make this prettier, probably
 
         private static Point SpritesheetCells { get; } = new Point(4, 4);
+
+        private static Dictionary<ModItems, string> CustomDisplayNames { get; set; } =
+            new Dictionary<ModItems, string>();
 
         // Menu
         public static Sprite DefaultMenu { get; private set; }
@@ -131,60 +139,91 @@
             var modFolderPath = Path.Combine(contentManager.root, "metroidvania");
 
             var uiPath = Path.Combine(modFolderPath, "ui");
-            CustomMenu = GetOptionalSprite(contentManager, Path.Combine(uiPath, "Menu"));
-            CustomSwitch = GetOptionalSprite(contentManager, Path.Combine(uiPath, "Switch"));
+            CustomMenu = LoadOptionalSprite(contentManager, Path.Combine(uiPath, "Menu"));
+            CustomSwitch = LoadOptionalSprite(contentManager, Path.Combine(uiPath, "Switch"));
 
             var iconPath = Path.Combine(modFolderPath, "icons");
-            IconCustomNone = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.None)));
+            IconCustomNone = LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.None)));
 
             IconCustomDoubleJump =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.DoubleJump)));
-            IconCustomLongJump = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LongJump)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.DoubleJump)));
+            IconCustomLongJump = LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LongJump)));
 
             IconCustomLowGravity =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LowGravity)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.LowGravity)));
             IconCustomHighGravity =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.HighGravity)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.HighGravity)));
             IconCustomFastHighGravity =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FastHighGravity)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FastHighGravity)));
 
-            IconCustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SlowFall)));
+            IconCustomSlowFall = LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SlowFall)));
 
             IconCustomNeverWater =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWater)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWater)));
             IconCustomAlwaysWater =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.AlwaysWater)));
             IconCustomSolidWater =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SolidWater)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.SolidWater)));
             IconCustomFrozenWater =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FrozenWater)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.FrozenWater)));
 
-            IconCustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
+            IconCustomNeverIce = LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverIce)));
 
-            IconCustomNeverWind = GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWind)));
+            IconCustomNeverWind = LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.NeverWind)));
             IconCustomReverseWind =
-                GetOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.ReverseWind)));
+                LoadOptionalSprite(contentManager, Path.Combine(iconPath, nameof(ModItems.ReverseWind)));
 
             var itemPath = Path.Combine(modFolderPath, "items");
-            CustomDoubleJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
-            CustomLongJump = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
+            CustomDoubleJump = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.DoubleJump)));
+            CustomLongJump = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LongJump)));
 
-            CustomLowGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LowGravity)));
-            CustomHighGravity = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.HighGravity)));
+            CustomLowGravity = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.LowGravity)));
+            CustomHighGravity = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.HighGravity)));
             CustomFastHighGravity =
-                GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FastHighGravity)));
+                LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FastHighGravity)));
 
-            CustomSlowFall = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SlowFall)));
+            CustomSlowFall = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SlowFall)));
 
-            CustomNeverWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWater)));
-            CustomAlwaysWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
-            CustomSolidWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SolidWater)));
-            CustomFrozenWater = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FrozenWater)));
+            CustomNeverWater = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWater)));
+            CustomAlwaysWater = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.AlwaysWater)));
+            CustomSolidWater = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.SolidWater)));
+            CustomFrozenWater = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.FrozenWater)));
 
-            CustomNeverIce = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
+            CustomNeverIce = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverIce)));
 
-            CustomNeverWind = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWind)));
-            CustomReverseWind = GetOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.ReverseWind)));
+            CustomNeverWind = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.NeverWind)));
+            CustomReverseWind = LoadOptionalSprite(contentManager, Path.Combine(itemPath, nameof(ModItems.ReverseWind)));
+        }
+
+        public static void LoadCustomDisplayNames()
+        {
+            var contentManager = Game1.instance.contentManager;
+            var xmlFile = Path.Combine(contentManager.root, "metroidvania", "names.xml");
+            if (!File.Exists(xmlFile))
+            {
+                return;
+            }
+
+            var doc = XDocument.Load(xmlFile);
+            if (doc.Root == null)
+            {
+                return;
+            }
+
+            CustomDisplayNames = doc.Root
+                ?.Elements("Name")
+                .Select(name =>
+                {
+                    if (!Enum.TryParse<ModItems>(name.Element("Type")?.Value, out var resultEnum))
+                    {
+                        return null;
+                    }
+
+                    var displayName = name.Element("DisplayName")?.Value;
+                    return displayName is null ? null : new NameMapping { Type = resultEnum, Name = displayName };
+                })
+                .Where(mapping => !(mapping is null))
+                .ToDictionary(mapping => mapping.Type, mapping => mapping.Name);
         }
 
         private static Sprite[] SpriteChopUtilGrid(Texture2D texture, Point cells, Vector2 center, Rectangle source)
@@ -210,7 +249,7 @@
             return spriteArray;
         }
 
-        private static Sprite GetOptionalSprite(JKContentManager contentManager, string texturePath)
+        private static Sprite LoadOptionalSprite(JKContentManager contentManager, string texturePath)
             => File.Exists(texturePath + ".xnb")
                 ? Sprite.CreateSprite(contentManager.Load<Texture2D>(texturePath))
                 : null;
@@ -302,5 +341,10 @@
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
+
+        public static string GetDisplayNameByType(ModItems type) =>
+            CustomDisplayNames.TryGetValue(type, out var name)
+                ? name
+                : Regex.Replace(type.ToString(), "([a-z])([A-Z])", "$1 $2");
     }
 }

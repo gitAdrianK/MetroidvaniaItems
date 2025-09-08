@@ -107,6 +107,7 @@
     <Compile Include="Patches\PatchWaterParticleSpawningBehaviour.cs"/>
     <Compile Include="Patches\PatchWindManager.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs"/>
+    <Compile Include="Util\Deserialization\NameMapping.cs" />
     <Compile Include="Util\Deserialization\Item.cs"/>
     <Compile Include="Util\MenuState.cs"/>
   </ItemGroup>

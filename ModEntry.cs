@@ -68,8 +68,9 @@ namespace MetroidvaniaItems
                 return;
             }
 
-            DataMetroidvania = DataMetroidvania.ReadFromFile();
             ModResources.LoadCustomTextures();
+            ModResources.LoadCustomDisplayNames();
+            DataMetroidvania = DataMetroidvania.ReadFromFile();
             var loadedTypes = ModEntities.LoadEntities(xmlFile, player);
 
             var isSolidWaterRegistered = false;

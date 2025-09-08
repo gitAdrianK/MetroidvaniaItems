@@ -8,12 +8,14 @@ namespace MetroidvaniaItems.Entities
     using JumpKing;
     using JumpKing.Player;
     using Microsoft.Xna.Framework;
+    using Microsoft.Xna.Framework.Graphics;
     using Util;
 
     public class EntityItemMenu : Entity
     {
         public EntityItemMenu(DataMetroidvania data, PlayerEntity player, Sprite spriteMenu, Sprite spriteSwitch)
         {
+            this.Font = Game1.instance.contentManager.font.StyleFont;
             this.Data = data;
             this.Player = player;
             this.SpriteMenu = spriteMenu;
@@ -22,6 +24,7 @@ namespace MetroidvaniaItems.Entities
             this.Height = spriteMenu.source.Height;
         }
 
+        private SpriteFont Font { get; }
         private DataMetroidvania Data { get; }
         private PlayerEntity Player { get; }
         private Sprite SpriteMenu { get; }
@@ -70,8 +73,7 @@ namespace MetroidvaniaItems.Entities
         {
             var hitbox = this.Player.m_body.GetHitbox();
             var positionX = this.Player.m_body.Position.X + (hitbox.Width / 2);
-            var positionY = this.Player.m_body.Position.Y + hitbox.Height - (hitbox.Height * 0.2f) +
-                            (Camera.CurrentScreen * 360);
+            var positionY = this.Player.m_body.Position.Y + (hitbox.Height * 0.5f) + (Camera.CurrentScreen * 360);
 
             var items = ModEntry.DataMetroidvania.GetNeighbours(ModEntry.DataMetroidvania.Hovering);
             var spritePrev = ModResources.GetIconByType(items[0]);
@@ -96,14 +98,21 @@ namespace MetroidvaniaItems.Entities
             spriteNext.Draw(new Vector2(
                 (int)(positionX + iconWidthHalf),
                 (int)(positionY - iconHeightHalf)));
+
+            var displayName = ModResources.GetDisplayNameByType(items[1]);
+            var measure = this.Font.MeasureString(displayName);
+            Game1.spriteBatch.DrawString(
+                this.Font,
+                displayName,
+                new Vector2((int)(positionX - (measure.X / 2)) , (int)(positionY + iconHeightHalf)),
+                Color.White);
         }
 
         private void DrawPrevious()
         {
             var hitbox = this.Player.m_body.GetHitbox();
             var positionX = this.Player.m_body.Position.X + (hitbox.Width / 2);
-            var positionY = this.Player.m_body.Position.Y + hitbox.Height - (hitbox.Height * 0.2f) +
-                            (Camera.CurrentScreen * 360);
+            var positionY = this.Player.m_body.Position.Y + (hitbox.Height * 0.5f) + (Camera.CurrentScreen * 360);
 
             var iconWidthHalf = this.Width / 2;
             var iconHeightHalf = this.Height / 2;
@@ -113,28 +122,31 @@ namespace MetroidvaniaItems.Entities
 
             if (this.Data.Active == ModItems.None)
             {
-                this.SpriteMenu.Draw(new Vector2(
-                    (int)(positionX - iconWidthHalf - this.Width),
+                this.SpriteMenu.Draw(new Vector2(positionX - iconWidthHalf - this.Width,
                     (int)(positionY - iconHeightHalf)));
             }
             else
             {
-                this.SpriteMenu.Draw(new Vector2(
-                    (int)(positionX + iconWidthHalf),
+                this.SpriteMenu.Draw(new Vector2(positionX + iconWidthHalf,
                     (int)(positionY - iconHeightHalf)));
             }
 
-            spriteNone.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf - this.Width),
+            spriteNone.Draw(new Vector2(positionX - iconWidthHalf - this.Width,
                 (int)(positionY - iconHeightHalf)));
 
-            this.SpriteSwitch.Draw(new Vector2(
-                (int)(positionX - iconWidthHalf),
+            this.SpriteSwitch.Draw(new Vector2(positionX - iconWidthHalf,
                 (int)(positionY - iconHeightHalf)));
 
-            spritePrev.Draw(new Vector2(
-                (int)(positionX + iconWidthHalf),
+            spritePrev.Draw(new Vector2(positionX + iconWidthHalf,
                 (int)(positionY - iconHeightHalf)));
+
+            var displayName = ModResources.GetDisplayNameByType(this.Data.Active);
+            var measure = this.Font.MeasureString(displayName);
+            Game1.spriteBatch.DrawString(
+                this.Font,
+                displayName,
+                new Vector2((int)(positionX - (measure.X / 2)) , (int)(positionY + iconHeightHalf)),
+                Color.White);
         }
     }
 }
